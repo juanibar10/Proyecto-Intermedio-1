@@ -4,10 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(ChunksPool))]
 public class ChunkManager : MonoBehaviour
 {
+    [Header("Generation Settings")]
     [SerializeField] private ChunksPool chunksPool;
-    [SerializeField] private Transform player;
     [SerializeField] private int initialChunks = 3;
-    [SerializeField] private float despawnDistance = 30f;
+    [SerializeField] private float worldSpeed = 5f;
 
     private readonly List<Chunk> activeChunks = new();
     private bool poolReady;
@@ -15,11 +15,13 @@ public class ChunkManager : MonoBehaviour
     private void OnEnable()
     {
         chunksPool.OnPoolInitialized += OnChunksLoaded;
+        GameEvents.OnChunkReturnToPool += HandleChunkReturned;
     }
 
     private void OnDisable()
     {
         chunksPool.OnPoolInitialized -= OnChunksLoaded;
+        GameEvents.OnChunkReturnToPool -= HandleChunkReturned;
     }
 
     private void Update()
@@ -27,7 +29,7 @@ public class ChunkManager : MonoBehaviour
         if (!poolReady)
             return;
 
-        ManageChunks();
+        MoveChunks();
     }
 
     private void OnChunksLoaded()
@@ -42,22 +44,25 @@ public class ChunkManager : MonoBehaviour
             SpawnNextChunk();
     }
 
-    private void ManageChunks()
+    private void MoveChunks()
     {
-        if (activeChunks.Count == 0)
-            return;
+        var delta = worldSpeed * Time.deltaTime;
 
-        var first = activeChunks[0];
-        var distance = player.position.x - first.transform.position.x;
-
-        if (distance > despawnDistance)
+        foreach (var chunk in activeChunks)
         {
-            chunksPool.ReturnToPool(first);
-            activeChunks.RemoveAt(0);
+            var pos = chunk.transform.position;
+            pos.x -= delta;
+            chunk.transform.position = pos;
         }
+    }
 
-        while (activeChunks.Count < initialChunks)
-            SpawnNextChunk();
+    private void HandleChunkReturned(Chunk chunk)
+    {
+        if (activeChunks.Contains(chunk))
+            activeChunks.Remove(chunk);
+        
+        chunksPool.ReturnToPool(chunk);
+        SpawnNextChunk();
     }
 
     private void SpawnNextChunk()
@@ -94,5 +99,4 @@ public class ChunkManager : MonoBehaviour
 
         activeChunks.Add(chunk);
     }
-
 }

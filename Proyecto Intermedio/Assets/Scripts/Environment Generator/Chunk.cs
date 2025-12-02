@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Chunk : MonoBehaviour
+public class Chunk : MonoBehaviour, IOutOfBoundsHandler
 {
     [Header("Chunk Data")]
     [SerializeField] private ChunkData data;
@@ -10,19 +10,9 @@ public class Chunk : MonoBehaviour
     [SerializeField] private Transform endPoint;
 
     public Transform EndPoint => endPoint;
-
-    private void OnValidate()
+    
+    public void ReturnToPool()
     {
-        if (!data) Debug.LogWarning($"{name}: Missing ChunkData reference.");
+        GameEvents.RaiseChunkReturnToPool(this);
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        if (!endPoint) return;
-        
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(endPoint.position, 0.15f);
-    }
-#endif
 }
