@@ -6,11 +6,16 @@ public class ChunkManager : MonoBehaviour
 {
     [Header("Generation Settings")]
     [SerializeField] private ChunksPool chunksPool;
+    [SerializeField] private Transform startPoint;
+
+    [Space]
     [SerializeField] private int initialChunks = 3;
     [SerializeField] private float worldSpeed = 5f;
 
     private readonly List<Chunk> activeChunks = new();
     private bool poolReady;
+
+    private int lastEntryIndex = -1;
 
     private void OnEnable()
     {
@@ -26,9 +31,7 @@ public class ChunkManager : MonoBehaviour
 
     private void Update()
     {
-        if (!poolReady)
-            return;
-
+        if (!poolReady) return;
         MoveChunks();
     }
 
@@ -60,7 +63,7 @@ public class ChunkManager : MonoBehaviour
     {
         if (activeChunks.Contains(chunk))
             activeChunks.Remove(chunk);
-        
+
         chunksPool.ReturnToPool(chunk);
         SpawnNextChunk();
     }
@@ -68,35 +71,61 @@ public class ChunkManager : MonoBehaviour
     private void SpawnNextChunk()
     {
         var entries = chunksPool.Entries;
-        var randomEntry = entries[Random.Range(0, entries.Count)];
+        var count = entries.Count;
 
-        var chunk = chunksPool.Get(randomEntry.prefab.Data.id);
+        if (count == 0)
+        {
+            Debug.LogError("No entries in chunk pool.");
+            return;
+        }
+
+        var index = GetNonRepeatingIndex(count);
+
+        var entry = entries[index];
+        lastEntryIndex = index;
+
+        var chunk = chunksPool.Get(entry.prefab.Data.id);
         if (!chunk)
         {
             Debug.LogError("SpawnNextChunk: null chunk returned from pool.");
             return;
         }
 
+        PositionChunk(chunk);
+        activeChunks.Add(chunk);
+    }
+
+    private int GetNonRepeatingIndex(int count)
+    {
+        if (count <= 1) return 0;
+
+        var index = Random.Range(0, count);
+
+        while (index == lastEntryIndex)
+        {
+            index = Random.Range(0, count);
+        }
+
+        return index;
+    }
+
+    private void PositionChunk(Chunk chunk)
+    {
         if (activeChunks.Count == 0)
         {
-            chunk.transform.position = Vector3.zero;
+            chunk.transform.position = startPoint.position;
+            return;
         }
-        else
+
+        var last = activeChunks[^1];
+
+        if (!last.EndPoint)
         {
-            var last = activeChunks[^1];
-
-            if (!last.EndPoint)
-            {
-                Debug.LogError($"Chunk '{last.name}' has no EndPoint assigned.");
-                chunk.transform.position = last.transform.position;
-            }
-            else
-            {
-                var spawnPos = last.EndPoint.position;
-                chunk.transform.position = spawnPos;
-            }
+            Debug.LogError($"Chunk '{last.name}' has no EndPoint assigned.");
+            chunk.transform.position = last.transform.position;
+            return;
         }
 
-        activeChunks.Add(chunk);
+        chunk.transform.position = last.EndPoint.position;
     }
 }
