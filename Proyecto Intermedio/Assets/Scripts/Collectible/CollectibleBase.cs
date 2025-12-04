@@ -6,11 +6,11 @@ public class CollectibleBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerStats stats = other.GetComponent<PlayerStats>();
+        ICollector collector = other.GetComponent<ICollector>();
 
-        if (stats != null)
+        if (collector != null)
         {
-            stats.AddCollectible(value);
+            collector.Collect(value);
             Destroy(gameObject);
         }
     }

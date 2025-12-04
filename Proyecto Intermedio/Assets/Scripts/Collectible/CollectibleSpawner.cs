@@ -20,8 +20,8 @@ public class CollectibleSpawner : MonoBehaviour
     public int minColumns = 2;
     public int maxColumns = 6;
 
-    public float horizontalSpacing = 1f;
-    public float verticalSpacing = 1f;
+    public float horizontalSpacing = 0.6f;
+    public float verticalSpacing = 0.6f;
 
     private float timer;
 
