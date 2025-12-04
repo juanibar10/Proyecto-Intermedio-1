@@ -14,7 +14,7 @@ public class BaseEnemy : MonoBehaviour
     {
         if (dm.Health <= 0)
         {
-            SpawnPool.Instance.Despawn(gameObject);
+            //SpawnPool.Instance.Despawn(gameObject);
         }
     }
 }

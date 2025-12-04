@@ -18,7 +18,10 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         rb.linearVelocity = new Vector2(direction * speed, 0);
+        FlipSprite();
     }
+
+    
 
     void Update()
     {
@@ -38,5 +41,12 @@ public class Bullet : MonoBehaviour
         }
         // Todo - verificar enemigos, paredes, etc.
         Destroy(gameObject);
+    }
+    
+    private void FlipSprite()
+    {
+        Vector3 s = transform.localScale;
+        s.x = Mathf.Abs(s.x) * direction; // multiplica por 1 o -1
+        transform.localScale = s;
     }
 }
