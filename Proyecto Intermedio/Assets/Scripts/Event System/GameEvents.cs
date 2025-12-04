@@ -6,4 +6,8 @@ public static class GameEvents
     public static event Action<Chunk> OnChunkReturnToPool;
     public static void RaiseChunkReturnToPool(Chunk chunk) =>
         OnChunkReturnToPool?.Invoke(chunk);
+    
+    public static event Action<BaseEnemy> OnEnemyReturnToPool;
+    public static void RaiseEnemyReturnToPool(BaseEnemy Enemy) =>
+        OnEnemyReturnToPool?.Invoke(Enemy);
 }

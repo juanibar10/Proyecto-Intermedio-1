@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour
+[RequireComponent(typeof(OutOfBoundsNotifier))]
+public class BaseEnemy : MonoBehaviour, IOutOfBoundsHandler
 {
+    public EnemyData data;
     private Damageable dm;
 
     private void Awake()
@@ -14,7 +16,18 @@ public class BaseEnemy : MonoBehaviour
     {
         if (dm.Health <= 0)
         {
-            //SpawnPool.Instance.Despawn(gameObject);
+            ReturnEnemyToPool();
         }
+    }
+    
+    public void ReturnEnemyToPool()
+    {
+        dm.RestoreMaxHP();
+        GameEvents.RaiseEnemyReturnToPool(this);
+    }
+
+    public void ReturnToPool()
+    {
+        ReturnEnemyToPool();
     }
 }
