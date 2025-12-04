@@ -1,21 +1,20 @@
+using System;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
-    [SerializeField] public float health = 10;
+    private Damageable dm;
 
-    public void takeDamage(float damage, GameObject sourceDamageObject)
+    private void Awake()
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            //SpawnPool.Instance.Despawn(GameObject);
-        }
+        dm = GetComponent<Damageable>();
     }
 
-
-    private void onTriggerEnter(Collider other)
+    private void Update()
     {
-
+        if (dm.Health <= 0)
+        {
+            SpawnPool.Instance.Despawn(gameObject);
+        }
     }
 }
