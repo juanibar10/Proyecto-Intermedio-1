@@ -4,7 +4,7 @@ public class SinglePointSpawner : MonoBehaviour, ISpawner
 {
     public enum SpawnMode { Random, Fixed }
 
-    public GameObject prefab;
+    public GameObject[] prefabs;
 
     [Header("Generation Mode")]
     public SpawnMode mode = SpawnMode.Random;
@@ -18,6 +18,7 @@ public class SinglePointSpawner : MonoBehaviour, ISpawner
 
     public void Spawn(Transform origin)
     {
+        GameObject prefab = prefabs[Random.Range(0, prefabs.Length)];
         float yValue;
 
         switch (mode)

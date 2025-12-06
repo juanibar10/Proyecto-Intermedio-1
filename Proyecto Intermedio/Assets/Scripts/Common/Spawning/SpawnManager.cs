@@ -6,17 +6,17 @@ public class SpawnManager : MonoBehaviour
     public GridSpawner collectibleSpawner;
     public float collectibleInterval = 2.5f;
 
-    [Header("Enemy Sniper Pattern")]
-    public SinglePointSpawner enemySniperSpawner;
+    [Header("Enemies Pattern")]
+    public SinglePointSpawner enemySpawner;
     public float enemyInterval = 3.5f;
 
-    //[Header("Power-Up Pattern")]
-    //public SinglePointSpawner powerupSpawner;
-    //public float powerupInterval = 10f;
+    [Header("Power-Ups Pattern")]
+    public SinglePointSpawner powerupSpawner;
+    public float powerupInterval = 10f;
 
     private float collectibleTimer;
     private float enemyTimer;
-    //private float powerupTimer;
+    private float powerupTimer;
 
     void Update()
     {
@@ -34,16 +34,16 @@ public class SpawnManager : MonoBehaviour
         enemyTimer += dt;
         if (enemyTimer >= enemyInterval)
         {
-            enemySniperSpawner.Spawn(transform);
+            enemySpawner.Spawn(transform);
             enemyTimer = 0;
         }
 
         // POWER-UPS
-        //powerupTimer += dt;
-        //if (powerupTimer >= powerupInterval)
-        //{
-        //    powerupSpawner.Spawn(transform);
-        //    powerupTimer = 0;
-        //}
+        powerupTimer += dt;
+        if (powerupTimer >= powerupInterval)
+        {
+            powerupSpawner.Spawn(transform);
+            powerupTimer = 0;
+        }
     }
 }

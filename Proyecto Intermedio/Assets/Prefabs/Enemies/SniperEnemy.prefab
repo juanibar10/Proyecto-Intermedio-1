@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8927685911105917427}
   - component: {fileID: 6047149502308615787}
   - component: {fileID: 616803552531703476}
-  - component: {fileID: 8411353484187597398}
   - component: {fileID: 4389564205534934587}
+  - component: {fileID: 8411353484187597398}
   m_Layer: 6
   m_Name: SniperEnemy
   m_TagString: Enemy
@@ -132,6 +132,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxHealth: 3
+--- !u!114 &4389564205534934587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333218501233243901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementType: 1
 --- !u!114 &8411353484187597398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,19 +159,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endPoint: {fileID: 3770563149247007161}
   leftOffset: 2
---- !u!114 &4389564205534934587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4333218501233243901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementType: 1
 --- !u!1 &6152352068438436425
 GameObject:
   m_ObjectHideFlags: 0
