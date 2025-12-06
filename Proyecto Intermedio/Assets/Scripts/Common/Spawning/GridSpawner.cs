@@ -16,8 +16,8 @@ public class GridSpawner : MonoBehaviour, ISpawner
     public int minColumns = 2;
     public int maxColumns = 5;
 
-    public float hSpacing = 0.6f;
-    public float vSpacing = 0.6f;
+    public float hSpacing = 0.4f;
+    public float vSpacing = 0.4f;
 
     public void Spawn(Transform origin)
     {

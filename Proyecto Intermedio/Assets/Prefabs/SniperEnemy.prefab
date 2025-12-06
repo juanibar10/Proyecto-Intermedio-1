@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7255422690632402359}
   - component: {fileID: 1594593477831048426}
-  - component: {fileID: 6047149502308615787}
   - component: {fileID: 8927685911105917427}
+  - component: {fileID: 6047149502308615787}
   - component: {fileID: 616803552531703476}
   - component: {fileID: 8411353484187597398}
   - component: {fileID: 4389564205534934587}
@@ -77,6 +77,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.04, y: -0.24}
   m_Size: {x: 0.91, y: 1.74}
   m_Direction: 0
+--- !u!114 &8927685911105917427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333218501233243901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b0e0f8e3040ab46b767b670e326d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 4cdf7e72e787fd44997b0c1b3ff83f7d, type: 2}
 --- !u!114 &6047149502308615787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,19 +104,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 4cdf7e72e787fd44997b0c1b3ff83f7d, type: 2}
   firePoint: {fileID: 6264773611202495044}
---- !u!114 &8927685911105917427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4333218501233243901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b0e0f8e3040ab46b767b670e326d0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 4cdf7e72e787fd44997b0c1b3ff83f7d, type: 2}
 --- !u!114 &616803552531703476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b38da344c1bef4aa7b45900242a93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 1
   onDamageEvent:
     m_PersistentCalls:
       m_Calls:
@@ -132,6 +131,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  maxHealth: 3
 --- !u!114 &8411353484187597398
 MonoBehaviour:
   m_ObjectHideFlags: 0

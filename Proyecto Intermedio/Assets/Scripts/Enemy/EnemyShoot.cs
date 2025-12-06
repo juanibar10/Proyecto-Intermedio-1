@@ -28,7 +28,7 @@ public class EnemyShoot : MonoBehaviour
     {
         //invierte la direccion de la bala detectando el lado
         int dir = transform.position.x > firePoint.position.x ? -1 : 1;
-        BulletHelper.ShootBullet(data.bulletPrefab, firePoint.position, dir);
+        BulletHelper.ShootBullet(data.bulletPrefab, firePoint.position, dir, BulletOwner.Enemy);
     }
 
     void ResetRandomTimer()

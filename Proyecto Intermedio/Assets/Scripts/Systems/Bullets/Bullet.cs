@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10f;
-   //1 derecha -1 izquierda asi se puede reusar en cualquier objecto
-    public int direction = 1;
 
+    public float speed = 10f;
+    public int direction = 1; // 1 => Derecha,  -1 => Izquierda
+
+    public BulletOwner owner;
+    
     private Rigidbody2D rb;
     private Renderer bulletRenderer;
+    private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         bulletRenderer = GetComponent<Renderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Start()
@@ -21,11 +25,9 @@ public class Bullet : MonoBehaviour
         FlipSprite();
     }
 
-    
-
     void Update()
     {
-        if (bulletRenderer != null && !bulletRenderer.isVisible)
+        if (!bulletRenderer.isVisible)
         {
             Destroy(gameObject);
         }
@@ -34,19 +36,35 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Damageable damageable = collision.GetComponent<Damageable>();
-        if (damageable != null)
+        
+        if (damageable == null) return;
+
+
+        if (owner == BulletOwner.Player && collision.CompareTag("Enemy")) //TODO
         {
             damageable.TakeDamage(1);
-            Debug.Log("Hit");
+            Destroy(gameObject);
         }
-        // Todo - verificar enemigos, paredes, etc.
-        Destroy(gameObject);
+
+        if (owner == BulletOwner.Enemy && collision.CompareTag("Player")) //TODO
+        {
+            damageable.TakeDamage(10);
+            Destroy(gameObject);
+        }
     }
     
     private void FlipSprite()
     {
         Vector3 s = transform.localScale;
-        s.x = Mathf.Abs(s.x) * direction; // multiplica por 1 o -1
+        s.x = Mathf.Abs(s.x) * direction; // * 1 o -1
         transform.localScale = s;
+    }
+
+    public void SetSprite(Sprite newSprite)
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = newSprite;
+        }
     }
 }

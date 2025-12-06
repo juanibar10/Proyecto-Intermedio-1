@@ -3,20 +3,14 @@ using TMPro;
 
 public class PlayerStats : MonoBehaviour, ICollector
 {
-    [Header("Health")]
-    public int maxHealth = 100;
-    public int currentHealth;
-
-    [Header("Collectibles")]
-    public int collectibles = 0;
-    public int score = 0;
-
     [Header("UI")]
     public TextMeshProUGUI collectiblesText;
 
+    private int collectibles = 0;
+    private int score = 0;
+
     void Awake()
     {
-        currentHealth = maxHealth;
         UpdateUI();
     }
 
@@ -34,20 +28,4 @@ public class PlayerStats : MonoBehaviour, ICollector
             collectiblesText.text = collectibles.ToString();
         }
     }
-
-    public void TakeDamage(int dmg)
-    {
-        currentHealth -= dmg;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        Debug.Log("El jugador ha muerto");
-    }
-
-    
 }

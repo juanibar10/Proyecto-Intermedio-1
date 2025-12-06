@@ -2,16 +2,21 @@ using UnityEngine;
 
 public static class BulletHelper
 {
-    public static void ShootBullet(GameObject bulletPrefab, Vector3 position, int dir, float speedOverride = -1)
+    public static Bullet ShootBullet(GameObject prefab, Vector3 position, int direction, BulletOwner owner, float speedOverride = -1)
     {
-        GameObject bullet = Object.Instantiate(bulletPrefab, position, Quaternion.identity);
-        Bullet b = bullet.GetComponent<Bullet>();
+        GameObject bullet = Object.Instantiate(prefab, position, Quaternion.identity);
 
+        Bullet b = bullet.GetComponent<Bullet>();
         if (b != null)
         {
-            b.direction = dir;
+            b.direction = direction;
+            b.owner = owner;
+
             if (speedOverride > 0)
+            {
                 b.speed = speedOverride;
+            }  
         }
+        return b;
     }
 }
