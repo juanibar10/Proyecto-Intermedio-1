@@ -1,6 +1,8 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static Unity.VisualScripting.Member;
 
 [RequireComponent(typeof(Collider2D))]
 public class Damageable : MonoBehaviour
@@ -27,13 +29,21 @@ public class Damageable : MonoBehaviour
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, BulletOwner owner)
     {
-        ReceiveDamage(amount);
+        ReceiveDamage(owner, amount);
     }
 
-    public void ReceiveDamage(int damageAmount = 1)
+    public void ReceiveDamage(BulletOwner owner, int damageAmount = 1)
     {
+        //Si el ataque proviene de un enemigo y el player tiene escudo, NO recibe daño
+        if (owner == BulletOwner.Enemy)
+        {
+            PlayerCollector player = GetComponent<PlayerCollector>();
+            if (player != null && player.IsShieldActive)
+                return;
+        }  
+
         currentHealth -= damageAmount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 

@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class CollectibleBase : MonoBehaviour
 {
-    public int value = 10;
-
     private bool isBeingPulled = false;
     private Transform pullTarget;
 
-    private const float pullSpeed = 15f;
+    private const float pullSpeed = 20f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,7 +13,7 @@ public class CollectibleBase : MonoBehaviour
 
         if (collector != null)
         {
-            collector.Collect(value);
+            collector.Collect();
             Destroy(gameObject);
         }
     }
@@ -28,6 +26,7 @@ public class CollectibleBase : MonoBehaviour
 
     private void Update()
     {
+        //TODO-Utilizar el destroy global
         if (transform.position.x < -15f)
             Destroy(gameObject);
         

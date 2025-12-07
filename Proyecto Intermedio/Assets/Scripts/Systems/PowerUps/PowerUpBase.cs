@@ -15,6 +15,7 @@ public abstract class PowerUpBase : MonoBehaviour
 
     private void Update()
     {
+        //TODO-Utilizar el destroy global
         if (transform.position.x < -15f)
             Destroy(gameObject);
     }

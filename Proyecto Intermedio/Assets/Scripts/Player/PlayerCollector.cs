@@ -7,23 +7,50 @@ public class PlayerCollector : MonoBehaviour
     private bool magnetActive = false;
     private float magnetTimer = 0f;
 
+    private bool shieldActive = false;
+    private float shieldTimer = 0f;
+
+    public bool IsShieldActive => shieldActive;
+
     public void ActivateMagnet(float duration)
     {
         magnetActive = true;
         magnetTimer = duration;
     }
 
+    public void ActivateMultiplier(int multiplier, float duration)
+    {
+        PlayerStats stats = GetComponent<PlayerStats>();
+        stats.SetMultiplier(multiplier, duration);
+    }
+    
+    public void ActivateShield(float duration)
+    {
+        shieldActive = true;
+        shieldTimer = duration;
+    }
+
     void Update()
     {
-        if (!magnetActive) return;
-
-        magnetTimer -= Time.deltaTime;
-        if (magnetTimer <= 0)
+        // MAGNET TIMER
+        if (magnetActive)
         {
-            magnetActive = false;
+            magnetTimer -= Time.deltaTime;
+            if (magnetTimer <= 0)
+                magnetActive = false;
+
+            PullCollectibles();
         }
 
-        PullCollectibles();
+        // SHIELD TIMER
+        if (shieldActive)
+        {
+            shieldTimer -= Time.deltaTime;
+            if (shieldTimer <= 0)
+            {
+                shieldActive = false;
+            }
+        }
     }
 
     private void PullCollectibles()
@@ -38,21 +65,5 @@ public class PlayerCollector : MonoBehaviour
                 collectible.StartPull(transform);
             }
         }
-    }
-
-    public void ActivateDash(float boost, float duration)
-    {
-        StartCoroutine(DashRoutine(boost, duration));
-    }
-
-    private IEnumerator DashRoutine(float boost, float duration)
-    {
-        PlayerMovement move = GetComponent<PlayerMovement>();
-
-        //move.speed += boost;
-
-        yield return new WaitForSeconds(duration);
-
-        //move.speed -= boost;
     }
 }

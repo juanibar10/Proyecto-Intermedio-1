@@ -1,9 +1,9 @@
-public class PowerUpMagnet : PowerUpBase
+public class PowerUpShield : PowerUpBase
 {
     public float duration = 10f;
-
+    
     protected override void ActivatePowerUp(PlayerCollector player)
     {
-        player.ActivateMagnet(duration);
+        player.ActivateShield(duration);
     }
 }

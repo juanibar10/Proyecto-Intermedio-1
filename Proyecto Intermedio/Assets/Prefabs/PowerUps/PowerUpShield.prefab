@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 704582407770673046}
   - component: {fileID: 3035219816678928806}
   m_Layer: 0
-  m_Name: PowerUpDash
+  m_Name: PowerUpShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: af91b161f106d9e46b3704f05a3ab63d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -166,8 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dc20b7338a12448b0ad0bb8553fdd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedBoost: 8
-  duration: 1
+  duration: 10
 --- !u!114 &3035219816678928806
 MonoBehaviour:
   m_ObjectHideFlags: 0

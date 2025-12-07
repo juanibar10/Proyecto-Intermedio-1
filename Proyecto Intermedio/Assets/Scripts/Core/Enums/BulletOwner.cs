@@ -1,5 +1,6 @@
 public enum BulletOwner
 {
     Player,
-    Enemy
+    Enemy,
+    Environment
 }
