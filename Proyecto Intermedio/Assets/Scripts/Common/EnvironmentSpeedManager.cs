@@ -12,7 +12,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     [Header("Speed Multipliers (for layers)")]
     public float backgroundSpeedMultiplier = 0.75f;
     public float itemSpeedMultiplier = 1f;
-    public float projectileSpeedMultiplier = 1.5f; // NEW
+    public float projectileSpeedMultiplier = 1.5f;
 
     [Header("Stopping Animation Settings")]
     [SerializeField] private float stopDuration = 1.2f;
@@ -32,7 +32,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
 
     public float BackgroundSpeed => _currentSpeed * backgroundSpeedMultiplier;
     public float ItemSpeed => _currentSpeed * itemSpeedMultiplier;
-    public float ProjectileSpeed => _currentSpeed * projectileSpeedMultiplier; // NEW
+    public float ProjectileSpeed => _currentSpeed * projectileSpeedMultiplier;
 
     private void OnEnable()
     {
@@ -95,7 +95,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     // RESUME ENVIRONMENT
     // -------------------------------------------------------------------------
     [Button]
-    public void OnResume()
+    private void OnResume()
     {
         if (!_isStopped)
             return;

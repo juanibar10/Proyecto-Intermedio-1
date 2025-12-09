@@ -9,8 +9,9 @@ public enum ElementType
 public class MovementHandler : MonoBehaviour
 {
    public ElementType elementType;
-   public bool active = true;
-
+   [HideInInspector] public bool active = true;
+   [SerializeField] public bool invertSpeed;
+   
    private void Update()
    {
        if (!active) return;
@@ -23,6 +24,7 @@ public class MovementHandler : MonoBehaviour
            _ => EnvironmentSpeedManager.Instance.BackgroundSpeed
        };
 
-       transform.position -= new Vector3(speed, 0, 0) * Time.deltaTime;
+       speed = invertSpeed ? -speed : speed;
+       transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
    }
 }

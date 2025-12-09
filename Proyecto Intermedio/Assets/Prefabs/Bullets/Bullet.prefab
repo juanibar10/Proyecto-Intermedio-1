@@ -176,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5312c9eadce24b9419a4cf3b06a03157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
   direction: 1
   owner: 0
 --- !u!114 &-1357366791476305187
@@ -193,3 +192,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: 2
   active: 1
+  invertSpeed: 1
