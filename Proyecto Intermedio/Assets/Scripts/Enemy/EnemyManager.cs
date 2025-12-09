@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -9,15 +7,14 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy(Vector3 spawnPoint)
     {
-        BaseEnemy enemy = enemyPool.Get(0);
+        var enemy = enemyPool.Get(0);
         enemy.transform.position = spawnPoint;
     }
 
-    public void DespawnEnemy(BaseEnemy enemy)
+    private void DespawnEnemy(BaseEnemy enemy)
     {
         enemyPool.ReturnToPool(enemy);
     }
-
     
     private void OnEnable()
     {
