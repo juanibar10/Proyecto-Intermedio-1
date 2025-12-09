@@ -12,6 +12,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     [Header("Speed Multipliers (for layers)")]
     public float backgroundSpeedMultiplier = 0.75f;
     public float itemSpeedMultiplier = 1f;
+    public float projectileSpeedMultiplier = 1.5f; // NEW
 
     [Header("Stopping Animation Settings")]
     [SerializeField] private float stopDuration = 1.2f;
@@ -31,6 +32,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
 
     public float BackgroundSpeed => _currentSpeed * backgroundSpeedMultiplier;
     public float ItemSpeed => _currentSpeed * itemSpeedMultiplier;
+    public float ProjectileSpeed => _currentSpeed * projectileSpeedMultiplier; // NEW
 
     private void OnEnable()
     {
@@ -41,7 +43,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     private void OnDisable()
     {
         GameEvents.OnEnvironmentStop -= OnStop;
-        GameEvents.OnEnvironmentResume -= OnResume;  
+        GameEvents.OnEnvironmentResume -= OnResume;
     }
 
     private void Start()
@@ -52,16 +54,11 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     private void Update()
     {
         if (_isStopped) return;
+        if (_stopTween != null && _stopTween.IsActive()) return;
+        if (_resumeTween != null && _resumeTween.IsActive()) return;
 
-        if (_stopTween != null && _stopTween.IsActive())
-            return;
-
-        if (_resumeTween != null && _resumeTween.IsActive())
-            return;
-
-        // Normal acceleration
         if (_currentSpeed >= maxSpeed) return;
-        
+
         _currentSpeed += acceleration * Time.deltaTime;
         if (_currentSpeed > maxSpeed)
             _currentSpeed = maxSpeed;
@@ -85,7 +82,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
 
         _stopTween = DOTween.To(
             () => _currentSpeed,
-            x  => _currentSpeed = x,
+            x => _currentSpeed = x,
             0f,
             stopDuration
         )
@@ -95,7 +92,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     }
 
     // -------------------------------------------------------------------------
-    // RESUME ENVIRONMENT (cinematic)
+    // RESUME ENVIRONMENT
     // -------------------------------------------------------------------------
     [Button]
     public void OnResume()
@@ -110,7 +107,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
 
         _resumeTween = DOTween.To(
             () => _currentSpeed,
-            x  => _currentSpeed = x,
+            x => _currentSpeed = x,
             _savedSpeedBeforeStop,
             resumeDuration
         )

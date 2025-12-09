@@ -3,7 +3,8 @@ using UnityEngine;
 public enum ElementType
 {
     Background,
-    Item
+    Item,
+    Projectile
 }
 public class MovementHandler : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MovementHandler : MonoBehaviour
        {
            ElementType.Background => EnvironmentSpeedManager.Instance.BackgroundSpeed,
            ElementType.Item => EnvironmentSpeedManager.Instance.ItemSpeed,
+           ElementType.Projectile => EnvironmentSpeedManager.Instance.ProjectileSpeed,
            _ => EnvironmentSpeedManager.Instance.BackgroundSpeed
        };
 
