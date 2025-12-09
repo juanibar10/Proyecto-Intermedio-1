@@ -140,6 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 157578723}
   - component: {fileID: 157578722}
+  - component: {fileID: 157578724}
   m_Layer: 0
   m_Name: EnviromentalSpeedManager
   m_TagString: Untagged
@@ -164,6 +165,7 @@ MonoBehaviour:
   acceleration: 1
   backgroundSpeedMultiplier: 0.5
   itemSpeedMultiplier: 1
+  projectileSpeedMultiplier: 1.5
   stopDuration: 1.2
   stopEase: 18
   resumeDuration: 0.4
@@ -183,6 +185,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157578724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157578721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementType: 0
+  active: 1
+  invertSpeed: 0
 --- !u!1 &395165391
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +769,10 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1508533053}
+    - target: {fileID: 8253523211357774797, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 7475261659902882325, guid: 903fa1ff590efd54a8939072da5959a2, type: 3}
     m_RemovedComponents:
     - {fileID: 0}
     m_RemovedGameObjects: []
