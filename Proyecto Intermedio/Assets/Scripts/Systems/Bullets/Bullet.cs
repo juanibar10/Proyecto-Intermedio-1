@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
-    public float speed = 10f;
+                         
     public int direction = 1; // 1 => Derecha,  -1 => Izquierda
 
     public BulletOwner owner;
@@ -21,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        rb.linearVelocity = new Vector2(direction * speed, 0);
+        //rb.linearVelocity = new Vector2(direction * speed, 0);
         FlipSprite();
     }
 

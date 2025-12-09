@@ -14,7 +14,6 @@ public static class BulletHelper
 
             if (speedOverride > 0)
             {
-                b.speed = speedOverride;
             }  
         }
         return b;
