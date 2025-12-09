@@ -16,9 +16,9 @@ public class MovementHandler : MonoBehaviour
        
        var speed = elementType switch
        {
-           ElementType.Background => EnvironmentSpeedManager.Instance.backgroundSpeed,
-           ElementType.Item => EnvironmentSpeedManager.Instance.itemSpeed,
-           _ => EnvironmentSpeedManager.Instance.backgroundSpeed
+           ElementType.Background => EnvironmentSpeedManager.Instance.BackgroundSpeed,
+           ElementType.Item => EnvironmentSpeedManager.Instance.ItemSpeed,
+           _ => EnvironmentSpeedManager.Instance.BackgroundSpeed
        };
 
        transform.position -= new Vector3(speed, 0, 0) * Time.deltaTime;

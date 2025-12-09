@@ -10,4 +10,14 @@ public static class GameEvents
     public static event Action<BaseEnemy> OnEnemyReturnToPool;
     public static void RaiseEnemyReturnToPool(BaseEnemy Enemy) =>
         OnEnemyReturnToPool?.Invoke(Enemy);
+    
+    
+    public static event Action OnEnvironmentStop;
+    public static void RaiseEnvironmentStop() =>
+        OnEnvironmentStop?.Invoke();
+    
+    
+    public static event Action OnEnvironmentResume;
+    public static void RaiseEnvironmentResume() =>
+        OnEnvironmentResume?.Invoke();
 }

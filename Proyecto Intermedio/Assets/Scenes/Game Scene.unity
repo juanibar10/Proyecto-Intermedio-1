@@ -159,8 +159,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cad74d09636600498ddbd12710cab7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundSpeed: 5
-  ItemSpeed: 8
+  startSpeed: 5
+  maxSpeed: 30
+  acceleration: 1
+  backgroundSpeedMultiplier: 0.5
+  itemSpeedMultiplier: 1
+  stopDuration: 1.2
+  stopEase: 18
+  resumeDuration: 0.4
+  resumeEase: 27
 --- !u!4 &157578723
 Transform:
   m_ObjectHideFlags: 0
