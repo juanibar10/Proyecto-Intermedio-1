@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using NaughtyAttributes;
@@ -30,20 +31,27 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
 
     private bool _isStopped;
 
+    public float GetStartSpeed() => startSpeed;
+    public float GetMaxSpeed()   => maxSpeed;
+    public float GetAcceleration() => acceleration;
+    public float GetCurrentSpeed() => _currentSpeed;
+
     public float BackgroundSpeed => _currentSpeed * backgroundSpeedMultiplier;
-    public float ItemSpeed => _currentSpeed * itemSpeedMultiplier;
+    public float ItemSpeed       => _currentSpeed * itemSpeedMultiplier;
     public float ProjectileSpeed => _currentSpeed * projectileSpeedMultiplier;
 
+    
+    
     private void OnEnable()
     {
-        GameEvents.OnEnvironmentStop += OnStop;
-        GameEvents.OnEnvironmentResume += OnResume;
+        GameEvents.OnPlayerKilled += OnStop;
+        GameEvents.OnPlayerRevived += OnResume;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnEnvironmentStop -= OnStop;
-        GameEvents.OnEnvironmentResume -= OnResume;
+        GameEvents.OnPlayerKilled -= OnStop;
+        GameEvents.OnPlayerRevived -= OnResume;
     }
 
     private void Start()

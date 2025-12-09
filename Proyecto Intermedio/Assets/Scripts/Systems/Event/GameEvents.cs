@@ -12,12 +12,12 @@ public static class GameEvents
         OnEnemyReturnToPool?.Invoke(Enemy);
     
     
-    public static event Action OnEnvironmentStop;
-    public static void RaiseEnvironmentStop() =>
-        OnEnvironmentStop?.Invoke();
+    public static event Action OnPlayerKilled;
+    public static void RaisePlayerKilled() =>
+        OnPlayerKilled?.Invoke();
     
     
-    public static event Action OnEnvironmentResume;
-    public static void RaiseEnvironmentResume() =>
-        OnEnvironmentResume?.Invoke();
+    public static event Action OnPlayerRevived;
+    public static void RaisePlayerRevived() =>
+        OnPlayerRevived?.Invoke();
 }
