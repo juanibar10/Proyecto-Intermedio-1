@@ -24,7 +24,7 @@ public class MovementHandler : MonoBehaviour
            _ => EnvironmentSpeedManager.Instance.BackgroundSpeed
        };
 
-       speed = invertSpeed ? -speed : speed;
+       speed = invertSpeed ? speed : -speed;
        transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
    }
 }
