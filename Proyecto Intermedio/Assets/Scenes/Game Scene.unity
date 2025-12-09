@@ -799,6 +799,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1579915407559010934, guid: c4aa9831967d2b04eb0f01c0e042149f, type: 3}
+      propertyPath: entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1579915407559010934, guid: c4aa9831967d2b04eb0f01c0e042149f, type: 3}
+      propertyPath: entries.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 3154030687259658121, guid: e19a3b258c9b9a84394514e82bb7156d, type: 3}
+    - target: {fileID: 1579915407559010934, guid: c4aa9831967d2b04eb0f01c0e042149f, type: 3}
+      propertyPath: entries.Array.data[1].initialSize
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8959549487111601759, guid: c4aa9831967d2b04eb0f01c0e042149f, type: 3}
       propertyPath: m_Name
       value: EnemyPool

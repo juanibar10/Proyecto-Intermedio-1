@@ -36,7 +36,7 @@ public class Damageable : MonoBehaviour
 
     public void ReceiveDamage(BulletOwner owner, int damageAmount = 1)
     {
-        //Si el ataque proviene de un enemigo y el player tiene escudo, NO recibe daño
+        //Si el ataque proviene de un enemigo y el player tiene escudo, NO recibe daï¿½o
         if (owner == BulletOwner.Enemy)
         {
             PlayerCollector player = GetComponent<PlayerCollector>();
