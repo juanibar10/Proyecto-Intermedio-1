@@ -97,4 +97,25 @@ public class ChunkManager : MonoBehaviour
         var last = _activeChunks[^1];
         chunk.transform.position = last.EndPoint.position;
     }
+    
+    private void OnDrawGizmos()
+    {
+        var colliders = GetComponentsInChildren<BoxCollider2D>();
+
+        foreach (var col in colliders)
+        {
+            if (!col.enabled) continue;
+
+            var t = col.transform;
+            var scale = t.lossyScale;
+
+            var size = new Vector2(col.size.x * scale.x, col.size.y * scale.y);
+            var offset = new Vector2(col.offset.x * scale.x, col.offset.y * scale.y);
+
+            var center = (Vector2)t.position + offset;
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(center, size);
+        }
+    }
 }

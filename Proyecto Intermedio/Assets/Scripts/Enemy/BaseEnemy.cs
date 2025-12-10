@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(OutOfBoundsNotifier))]
@@ -12,12 +11,14 @@ public class BaseEnemy : MonoBehaviour, IOutOfBoundsHandler
         dm = GetComponent<Damageable>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (dm.Health <= 0)
-        {
-            ReturnEnemyToPool();
-        }
+        dm.OnDied += ReturnEnemyToPool;
+    }
+
+    private void OnDisable()
+    {
+        dm.OnDied -= ReturnEnemyToPool;
     }
     
     public void ReturnEnemyToPool()
