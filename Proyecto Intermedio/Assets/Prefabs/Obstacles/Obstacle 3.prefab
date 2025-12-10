@@ -213,6 +213,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 1
+  receiveDamageOnCollide: 1
+  makeDamageOnCollide: 1
 --- !u!114 &1035442133414635341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,6 +697,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 1
+  receiveDamageOnCollide: 1
+  makeDamageOnCollide: 1
 --- !u!114 &8348487251326480447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,6 +1011,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 1
+  receiveDamageOnCollide: 1
+  makeDamageOnCollide: 1
 --- !u!114 &2896249275530073420
 MonoBehaviour:
   m_ObjectHideFlags: 0

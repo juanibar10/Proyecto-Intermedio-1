@@ -15,7 +15,9 @@ public class Damageable : MonoBehaviour
 
     public event Action<int, int> OnHealthChanged;
     public event Action OnDied;
-    
+
+    public bool receiveDamageOnCollide;
+    public bool makeDamageOnCollide;
 
     private void Awake()
     {        
@@ -63,7 +65,7 @@ public class Damageable : MonoBehaviour
 
         if (!other.gameObject.CompareTag("Player")) return;
         
-        TakeDamage(1, BulletOwner.Player);
-        damageable.TakeDamage(10, BulletOwner.Environment);
+        if(receiveDamageOnCollide) TakeDamage(1, BulletOwner.Player);
+        if(makeDamageOnCollide) damageable.TakeDamage(10, BulletOwner.Environment);
     }
 }
