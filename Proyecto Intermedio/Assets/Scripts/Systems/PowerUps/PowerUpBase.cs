@@ -5,7 +5,7 @@ public abstract class PowerUpBase : MonoBehaviour
 {
     public float duration = 15f;
 
-    public static event Action<Sprite, float> OnPowerUpActivated;
+    public static event Action<string, float> OnPowerUpActivated;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,7 +15,7 @@ public abstract class PowerUpBase : MonoBehaviour
         {
             Sprite icon = GetComponent<SpriteRenderer>()?.sprite;
 
-            OnPowerUpActivated?.Invoke(icon, duration);
+            OnPowerUpActivated?.Invoke(GetType().Name, duration);
             ActivatePowerUp(player);
             Destroy(gameObject);
         }

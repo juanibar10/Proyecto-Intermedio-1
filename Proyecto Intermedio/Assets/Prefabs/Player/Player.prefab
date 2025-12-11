@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: -5564156120152338153}
   - component: {fileID: -7497777059610772076}
   - component: {fileID: -7662184737931679991}
-  - component: {fileID: 855197315267558597}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -38,7 +37,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5425687, y: -0.12912008, z: 0}
   m_LocalScale: {x: 1.2916665, y: 1, z: 1.6666665}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6541069424874779266}
   m_Father: {fileID: 0}
@@ -265,22 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4484b2a8fdd4de4448a5baef8b85f61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &855197315267558597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4735440934718843791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3851db2daa5901a4f8c3df732c6b9d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinsText: {fileID: 0}
-  scoreText: {fileID: 0}
-  killsText: {fileID: 0}
-  distanceText: {fileID: 0}
 --- !u!1 &7061166677871861576
 GameObject:
   m_ObjectHideFlags: 0

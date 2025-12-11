@@ -30,23 +30,6 @@ public class StatisticsSystem : MonoBehaviour
         ResetStats();
     }
 
-    private void Update()
-    {
-        //float dt = Time.deltaTime;
-
-        //// Score por tiempo
-        //Debug.Log(baseScorePerSecond + " * " + scoreMultiplier + " * " + dt);
-        //int scoreToAdd = Mathf.RoundToInt(baseScorePerSecond * scoreMultiplier * dt);
-        //Debug.Log(scoreToAdd);
-        //AddScore(scoreToAdd);
-
-        //// Tiempo total
-        //CurrentRun.timeSurvived += dt;
-
-        //// Indicar cambios para actualizar la UI
-        //OnStatsChanged?.Invoke();
-    }
-
     public void ResetStats()
     {
         CurrentRun = new RunStatistics();
@@ -69,7 +52,7 @@ public class StatisticsSystem : MonoBehaviour
             CurrentRun.score++;
             scoreAccumulator -= 1f;
         }
-
+        
         OnStatsChanged?.Invoke();
     }
 
@@ -96,16 +79,4 @@ public class StatisticsSystem : MonoBehaviour
         yield return new WaitForSeconds(duration);
         collectibleMultiplier = 1;
     }
-
-    //public void SetScoreMultiplier(int mult, float duration)
-    //{
-    //    StartCoroutine(ScoreMultiplierRoutine(mult, duration));
-    //}
-
-    //private IEnumerator ScoreMultiplierRoutine(int mult, float duration)
-    //{
-    //    scoreMultiplier = mult;
-    //    yield return new WaitForSeconds(duration);
-    //    scoreMultiplier = 1;
-    //}
 }
