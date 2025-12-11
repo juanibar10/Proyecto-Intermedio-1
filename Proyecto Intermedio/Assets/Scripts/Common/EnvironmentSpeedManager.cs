@@ -10,6 +10,9 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     [SerializeField] private float maxSpeed = 20f;
     [SerializeField] private float acceleration = 0.5f;
 
+    [Header("Real Speed (Infinite Scaling)")]
+    [SerializeField] private float realAcceleration = 0.2f;
+    
     [Header("Speed Multipliers (for layers)")]
     public float backgroundSpeedMultiplier = 0.75f;
     public float itemSpeedMultiplier = 1f;
@@ -25,6 +28,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
 
     private float _currentSpeed;
     private float _savedSpeedBeforeStop;
+    private float realSpeed;
 
     private Tween _stopTween;
     private Tween _resumeTween;
@@ -57,10 +61,16 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     private void Start()
     {
         _currentSpeed = startSpeed;
+        realSpeed = startSpeed;
     }
 
     private void Update()
     {
+        // DISTANCE TRACKING
+        realSpeed += realAcceleration * Time.deltaTime;
+        float distanceThisFrame = realSpeed * Time.deltaTime;
+        StatisticsSystem.Instance.AddDistance(distanceThisFrame);
+
         if (_isStopped) return;
         if (_stopTween != null && _stopTween.IsActive()) return;
         if (_resumeTween != null && _resumeTween.IsActive()) return;

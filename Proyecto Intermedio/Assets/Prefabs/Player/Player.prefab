@@ -14,11 +14,12 @@ GameObject:
   - component: {fileID: 6767949833383138176}
   - component: {fileID: -5367425698261425757}
   - component: {fileID: 2346220074924217655}
-  - component: {fileID: 855197315267558597}
+  - component: {fileID: 5326710627246810144}
   - component: {fileID: 8253523211357774797}
   - component: {fileID: -5564156120152338153}
-  - component: {fileID: -7662184737931679991}
   - component: {fileID: -7497777059610772076}
+  - component: {fileID: -7662184737931679991}
+  - component: {fileID: 855197315267558597}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -196,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ascendSpeed: 6
---- !u!114 &855197315267558597
+--- !u!114 &5326710627246810144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,10 +206,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4735440934718843791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3851db2daa5901a4f8c3df732c6b9d76, type: 3}
+  m_Script: {fileID: 11500000, guid: f1f8418753a701e4ea34af63a0483af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectiblesText: {fileID: 0}
 --- !u!114 &8253523211357774797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f24d8ae1475ce4ebb903a68abb16e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 7475261659902882325, guid: 9996fc0fff76de24fb80af398b1df412, type: 3}
+  bulletPrefab: {fileID: 7475261659902882325, guid: 903fa1ff590efd54a8939072da5959a2, type: 3}
   bulletSprite: {fileID: 21300000, guid: 733a349b78b77f449bef1f7e09965eea, type: 3}
   firePoint: {fileID: 6541069424874779266}
   shootCooldown: 0.25
@@ -241,18 +241,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHealth: 100
---- !u!114 &-7662184737931679991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4735440934718843791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4484b2a8fdd4de4448a5baef8b85f61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-7497777059610772076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +253,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365566a753460b34b883a3bfdde4e9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7662184737931679991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735440934718843791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4484b2a8fdd4de4448a5baef8b85f61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &855197315267558597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4735440934718843791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3851db2daa5901a4f8c3df732c6b9d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinsText: {fileID: 0}
+  scoreText: {fileID: 0}
+  killsText: {fileID: 0}
+  distanceText: {fileID: 0}
 --- !u!1 &7061166677871861576
 GameObject:
   m_ObjectHideFlags: 0
