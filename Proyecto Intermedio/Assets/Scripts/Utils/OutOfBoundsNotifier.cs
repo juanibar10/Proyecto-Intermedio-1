@@ -51,6 +51,7 @@ public class OutOfBoundsNotifier : MonoBehaviour
                 CacheTilemapBounds();
                 break;
 
+            case ElementType.Projectile:
             case ElementType.Item:
                 CacheSpriteRendererBounds();
                 break;

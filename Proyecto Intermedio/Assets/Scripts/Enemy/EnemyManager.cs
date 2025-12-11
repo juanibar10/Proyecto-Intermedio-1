@@ -25,9 +25,4 @@ public class EnemyManager : MonoBehaviour
     {
         GameEvents.OnEnemyReturnToPool -= DespawnEnemy;
     }
-
-    private void Start()
-    {
-        SpawnEnemy(transform.position);
-    }
 }

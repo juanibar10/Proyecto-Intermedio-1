@@ -1,8 +1,6 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using static Unity.VisualScripting.Member;
 
 [RequireComponent(typeof(Collider2D))]
 public class Damageable : MonoBehaviour
@@ -17,6 +15,9 @@ public class Damageable : MonoBehaviour
 
     public event Action<int, int> OnHealthChanged;
     public event Action OnDied;
+
+    public bool receiveDamageOnCollide;
+    public bool makeDamageOnCollide;
 
     private void Awake()
     {        
@@ -37,7 +38,7 @@ public class Damageable : MonoBehaviour
     public void ReceiveDamage(BulletOwner owner, int damageAmount = 1)
     {
         //Si el ataque proviene de un enemigo y el player tiene escudo, NO recibe da�o
-        if (owner == BulletOwner.Enemy)
+        if (owner is BulletOwner.Enemy or BulletOwner.Environment)
         {
             PlayerCollector player = GetComponent<PlayerCollector>();
             if (player != null && player.IsShieldActive)
@@ -54,5 +55,17 @@ public class Damageable : MonoBehaviour
         {
             OnDied?.Invoke();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        var damageable = other.gameObject.GetComponent<Damageable>();
+        
+        if (damageable == null) return;
+
+        if (!other.gameObject.CompareTag("Player")) return;
+        
+        if(receiveDamageOnCollide) TakeDamage(1, BulletOwner.Player);
+        if(makeDamageOnCollide) damageable.TakeDamage(10, BulletOwner.Environment);
     }
 }
