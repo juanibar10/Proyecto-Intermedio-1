@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,8 +33,6 @@ public class CircularProgressBar : MonoBehaviour
         isActive = true;
         maxIndicatorTimer = countdownTime;
         indicatorTimer = maxIndicatorTimer;
-        Debug.Log("PROBANDO");
-
     }
 
     public void StopCountdown()

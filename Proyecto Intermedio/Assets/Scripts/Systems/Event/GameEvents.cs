@@ -20,4 +20,9 @@ public static class GameEvents
     public static event Action OnPlayerRevived;
     public static void RaisePlayerRevived() =>
         OnPlayerRevived?.Invoke();
+
+    public static event Action<ObstacleParent> OnObstacleReturnToPool;
+    public static void RaiseObstacleReturnToPool(ObstacleParent obstacleParent) => 
+        OnObstacleReturnToPool?.Invoke(obstacleParent);
+
 }
