@@ -1,7 +1,5 @@
 public class PowerUpMagnet : PowerUpBase
 {
-    public float duration = 10f;
-
     protected override void ActivatePowerUp(PlayerCollector player)
     {
         player.ActivateMagnet(duration);

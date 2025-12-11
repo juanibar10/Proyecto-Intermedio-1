@@ -10,6 +10,9 @@ public class PlayerCollector : MonoBehaviour
     private bool shieldActive = false;
     private float shieldTimer = 0f;
 
+    public float MagnetTimeLeft => magnetActive ? magnetTimer : 0f;
+    public float ShieldTimeLeft => shieldActive ? shieldTimer : 0f;
+    public bool IsMagnetActive => magnetActive;
     public bool IsShieldActive => shieldActive;
 
     public void ActivateMagnet(float duration)
@@ -20,10 +23,9 @@ public class PlayerCollector : MonoBehaviour
 
     public void ActivateMultiplier(int multiplier, float duration)
     {
-        PlayerStats stats = GetComponent<PlayerStats>();
-        stats.SetMultiplier(multiplier, duration);
+        StatisticsSystem.Instance.SetCollectibleMultiplier(multiplier, duration);
     }
-    
+
     public void ActivateShield(float duration)
     {
         shieldActive = true;

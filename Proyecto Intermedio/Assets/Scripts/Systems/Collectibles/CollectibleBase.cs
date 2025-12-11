@@ -5,7 +5,7 @@ public class CollectibleBase : MonoBehaviour
     private bool isBeingPulled = false;
     private Transform pullTarget;
 
-    private const float pullSpeed = 20f;
+    private const float pullSpeed = 25f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
