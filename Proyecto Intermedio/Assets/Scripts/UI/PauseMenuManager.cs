@@ -3,7 +3,8 @@ using DG.Tweening;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroup pauseGroup;
+    [SerializeField] private CanvasGroup gameOverGroup;
     [SerializeField] private float fadeDuration = 0.25f;
 
     private Tween _fadeTween;
@@ -17,15 +18,15 @@ public class PauseMenuManager : MonoBehaviour
     {
         _fadeTween?.Kill();
 
-        canvasGroup.gameObject.SetActive(true);
-        canvasGroup.blocksRaycasts = true;
-        canvasGroup.interactable = true;
+        pauseGroup.gameObject.SetActive(true);
+        pauseGroup.blocksRaycasts = true;
+        pauseGroup.interactable = true;
 
-        canvasGroup.alpha = 0f;
+        pauseGroup.alpha = 0f;
 
         Time.timeScale = 0f;
 
-        _fadeTween = canvasGroup
+        _fadeTween = pauseGroup
             .DOFade(1f, fadeDuration)
             .SetUpdate(true); 
     }
@@ -34,16 +35,33 @@ public class PauseMenuManager : MonoBehaviour
     {
         _fadeTween?.Kill();
 
-        _fadeTween = canvasGroup
+        _fadeTween = pauseGroup
             .DOFade(0f, fadeDuration)
             .SetUpdate(true)
             .OnComplete(() =>
             {
-                canvasGroup.blocksRaycasts = false;
-                canvasGroup.interactable = false;
-                canvasGroup.gameObject.SetActive(false);
+                pauseGroup.blocksRaycasts = false;
+                pauseGroup.interactable = false;
+                pauseGroup.gameObject.SetActive(false);
                 Time.timeScale = 1f;
             });
+    }
+
+    public void ShowGameOver()
+    {
+        _fadeTween?.Kill();
+
+        gameOverGroup.gameObject.SetActive(true);
+        gameOverGroup.blocksRaycasts = true;
+        gameOverGroup.interactable = true;
+
+        gameOverGroup.alpha = 0f;
+
+        Time.timeScale = 0f;
+
+        _fadeTween = gameOverGroup
+            .DOFade(1f, fadeDuration)
+            .SetUpdate(true); 
     }
 
     public void GoMainMenu()
@@ -51,4 +69,11 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 1f;
         GameSceneManager.Instance.LoadMainMenu();
     }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        GameSceneManager.Instance.LoadGameplay();
+    }
+
 }

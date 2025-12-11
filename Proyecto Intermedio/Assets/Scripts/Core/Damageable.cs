@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Damageable : MonoBehaviour
 {
     [SerializeField] public UnityEvent onDamageEvent;
+    [SerializeField] public UnityEvent onDieEvent;
 
     [SerializeField] private int maxHealth = 5;
     private int currentHealth;
@@ -54,6 +55,7 @@ public class Damageable : MonoBehaviour
         if (currentHealth <= 0)
         {
             OnDied?.Invoke();
+            onDieEvent?.Invoke();
         }
     }
 

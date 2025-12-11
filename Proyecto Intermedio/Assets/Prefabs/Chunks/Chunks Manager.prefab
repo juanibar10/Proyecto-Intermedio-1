@@ -186,7 +186,6 @@ MonoBehaviour:
   chunksPool: {fileID: 3573282597428673113}
   startPoint: {fileID: 6048858233229198455}
   initialChunks: 3
-  worldSpeed: 5
 --- !u!1 &6289506391826815202
 GameObject:
   m_ObjectHideFlags: 0
