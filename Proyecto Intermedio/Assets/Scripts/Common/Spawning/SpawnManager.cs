@@ -14,9 +14,14 @@ public class SpawnManager : MonoBehaviour
     public SinglePointSpawner powerupSpawner;
     public float powerupInterval = 10f;
 
+    [Header("Obstacles Pattern")]
+    public SinglePointSpawner obstaclesSpawner;
+    public float obstaclesInterval = 2f;
+
     private float collectibleTimer;
     private float enemyTimer;
     private float powerupTimer;
+    private float obstaclesTimer;
 
     void Update()
     {
@@ -44,6 +49,14 @@ public class SpawnManager : MonoBehaviour
         {
             powerupSpawner.Spawn(transform);
             powerupTimer = 0;
+        }
+
+        // POWER-UPS
+        obstaclesTimer += dt;
+        if (obstaclesTimer >= obstaclesInterval)
+        {
+            obstaclesSpawner.Spawn(transform);
+            obstaclesTimer = 0;
         }
     }
 }
