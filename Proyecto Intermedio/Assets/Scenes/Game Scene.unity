@@ -285,6 +285,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2233941460189238518, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233941460189238518, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233941460189238518, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233941460189238518, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2416169771556280355, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
       propertyPath: playerDamageable
       value: 
@@ -295,6 +311,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5594687307209611443, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6512496185905086501, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6512496185905086501, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6512496185905086501, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6512496185905086501, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9012116823934505544, guid: 860e08f15d5ea7944963a6e9df716d24, type: 3}
@@ -390,6 +422,8 @@ MonoBehaviour:
   enemyInterval: 3.5
   powerupSpawner: {fileID: 5057118865382416749, guid: baec21740360be941b61ca93eeeeb4d9, type: 3}
   powerupInterval: 10
+  obstaclesSpawner: {fileID: 5057118865382416749, guid: dd6c5ebd5de43744fb6c2f7f3b569479, type: 3}
+  obstaclesInterval: 2
 --- !u!4 &439764560
 Transform:
   m_ObjectHideFlags: 0
