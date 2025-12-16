@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class BasePoolBehaviour<T> : MonoBehaviour, IPool<T> where T : MonoBehaviour
 {
     [Header("Pool Configuration")]
-    [SerializeField] protected Transform parent;
     [SerializeField, Space] protected List<PoolEntry<T>> entries = new();
     public IReadOnlyList<PoolEntry<T>> Entries => entries;
     
@@ -15,7 +14,7 @@ public abstract class BasePoolBehaviour<T> : MonoBehaviour, IPool<T> where T : M
 
     protected virtual void Start()
     {
-        InitializePool(entries, GetIdFromPrefab, parent, OnInstantiate);
+        InitializePool(entries, GetIdFromPrefab, transform, OnInstantiate);
     }
 
     /// <summary>

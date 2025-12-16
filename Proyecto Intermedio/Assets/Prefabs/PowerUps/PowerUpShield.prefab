@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4057431416984382889}
   - component: {fileID: 704582407770673046}
   - component: {fileID: 3035219816678928806}
+  - component: {fileID: 7736228933103001723}
   m_Layer: 0
   m_Name: PowerUpShield
   m_TagString: Untagged
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dc20b7338a12448b0ad0bb8553fdd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 15
+  data: {fileID: 11400000, guid: 6f2a77eb02217f04eb8a48edf31dda67, type: 2}
 --- !u!114 &3035219816678928806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +203,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 0
+  elementType: 1
   active: 1
   invertSpeed: 0
+--- !u!114 &7736228933103001723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7881256497831250425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629383397e5eb0c45a3a99c9e6134dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementType: 1
+  leftOffset: 2

@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "ObstacleData", menuName = "Scriptable Objects/Obstacle Data")]
-public class ObstacleData : ScriptableObject
+public class ObstacleData : ScriptableObject, IPoolData
 {
-    [Tooltip("Unique identifier for this obstacle type")]
-    public int id;
+    [SerializeField] private int id;
+    public int Id => id;
+
+    [SerializeField] private int heightInLanes;
+    public int HeightInLanes => heightInLanes;
 }

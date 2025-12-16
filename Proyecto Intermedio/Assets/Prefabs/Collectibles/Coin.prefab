@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3692765245307048858}
   - component: {fileID: 595914789470053808}
   - component: {fileID: 7597740898342675409}
+  - component: {fileID: 6018608506456974587}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1c160fc537c19418557d25acc31342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 10
+  data: {fileID: 11400000, guid: a488beec726126a448ac86e4f29f619e, type: 2}
 --- !u!114 &7597740898342675409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,4 +203,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementType: 1
+  elementType: 1
+  active: 1
+  invertSpeed: 0
+--- !u!114 &6018608506456974587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3564236201595630287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629383397e5eb0c45a3a99c9e6134dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementType: 1
+  leftOffset: 2

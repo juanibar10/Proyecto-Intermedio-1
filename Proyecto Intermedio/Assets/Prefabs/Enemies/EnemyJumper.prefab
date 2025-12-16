@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629383397e5eb0c45a3a99c9e6134dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 7242666982466116354}
+  elementType: 1
   leftOffset: 2
 --- !u!114 &3154030687259658121
 MonoBehaviour:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b0e0f8e3040ab46b767b670e326d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: a77bc3e847504cc4faf0f41c3972e73b, type: 2}
 --- !u!114 &6233183902238024512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +193,12 @@ MonoBehaviour:
   onDamageEvent:
     m_PersistentCalls:
       m_Calls: []
+  onDieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   maxHealth: 1
+  receiveDamageOnCollide: 0
+  makeDamageOnCollide: 0
 --- !u!114 &7386724769790629213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementType: 1
+  elementType: 1
+  active: 1
+  invertSpeed: 0
 --- !u!114 &899708104721763562
 MonoBehaviour:
   m_ObjectHideFlags: 0

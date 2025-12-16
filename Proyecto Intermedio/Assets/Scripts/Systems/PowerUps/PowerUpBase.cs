@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
 
-public abstract class PowerUpBase : MonoBehaviour
+[RequireComponent(typeof(OutOfBoundsNotifier))]
+public abstract class PowerUpBase : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<PowerUpData>
 {
-    public float duration = 15f;
+    [SerializeField] private PowerUpData data;
+    public PowerUpData Data => data;
 
     public static event Action<string, float> OnPowerUpActivated;
 
@@ -15,18 +17,16 @@ public abstract class PowerUpBase : MonoBehaviour
         {
             Sprite icon = GetComponent<SpriteRenderer>()?.sprite;
 
-            OnPowerUpActivated?.Invoke(GetType().Name, duration);
+            OnPowerUpActivated?.Invoke(GetType().Name, data.duration);
             ActivatePowerUp(player);
-            Destroy(gameObject);
+            ReturnToPool();
         }
     }
-
-    private void Update()
-    {
-        //TODO-Utilizar el destroy global
-        if (transform.position.x < -15f)
-            Destroy(gameObject);
-    }
-
+    
     protected abstract void ActivatePowerUp(PlayerCollector player);
+    
+    public void ReturnToPool()
+    {
+        GameEvents.RaisePowerUpReturnToPool(this);
+    }
 }

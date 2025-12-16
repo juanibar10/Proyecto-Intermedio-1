@@ -63,7 +63,7 @@ public class ChunkManager : MonoBehaviour
         var index = GetNonRepeatingIndex(count);
         _lastEntryIndex = index;
 
-        var chunk = chunksPool.Get(entries[index].prefab.Data.id);
+        var chunk = chunksPool.Get(entries[index].prefab.Data.Id);
 
         if (!chunk)
             return;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Chunk : MonoBehaviour, IOutOfBoundsHandler
+public class Chunk : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<ChunkData>
 {
     [Header("Chunk Data")]
     [SerializeField] private ChunkData data;

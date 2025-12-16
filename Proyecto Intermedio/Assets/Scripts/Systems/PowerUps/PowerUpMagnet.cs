@@ -2,6 +2,6 @@ public class PowerUpMagnet : PowerUpBase
 {
     protected override void ActivatePowerUp(PlayerCollector player)
     {
-        player.ActivateMagnet(duration);
+        player.ActivateMagnet(Data.duration);
     }
 }

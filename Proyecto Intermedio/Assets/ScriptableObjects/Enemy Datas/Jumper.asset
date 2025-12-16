@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7241b583ac734386a55107d69778536a, type: 3}
-  m_Name: ObstacleData 2
+  m_Script: {fileID: 11500000, guid: 08f59b7fc8c5b8245b3524ccfccdbf99, type: 3}
+  m_Name: Jumper
   m_EditorClassIdentifier: 
-  id: 2
+  id: 1
+  bulletPrefab: {fileID: 0}
+  minShootDelay: 0.2
+  maxShootDelay: 3.5

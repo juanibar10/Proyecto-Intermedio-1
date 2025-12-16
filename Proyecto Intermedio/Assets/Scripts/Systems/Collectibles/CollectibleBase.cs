@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class CollectibleBase : MonoBehaviour
+public class CollectibleBase : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<CollectibleData>
 {
-    private bool isBeingPulled = false;
+    [SerializeField] private CollectibleData data;
+    public CollectibleData Data => data;
+    
+    private bool isBeingPulled;
     private Transform pullTarget;
-
-    private const float pullSpeed = 25f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        ICollector collector = other.GetComponent<ICollector>();
-
-        if (collector != null)
-        {
-            collector.Collect();
-            Destroy(gameObject);
-        }
+        var collector = other.GetComponent<ICollector>();
+        if (collector == null) return;
+        
+        collector.Collect();
+        ReturnToPool();
     }
 
     public void StartPull(Transform target)
@@ -26,17 +25,20 @@ public class CollectibleBase : MonoBehaviour
 
     private void Update()
     {
-        //TODO-Utilizar el destroy global
-        if (transform.position.x < -15f)
-            Destroy(gameObject);
-        
         if (!isBeingPulled || pullTarget == null)
             return;
 
         transform.position = Vector3.MoveTowards(
             transform.position,
             pullTarget.position,
-            Time.deltaTime * pullSpeed
+            Time.deltaTime * data.pullSpeed
         );
+    }
+    
+    public void ReturnToPool()
+    {
+        GameEvents.RaiseCollectibleReturnToPool(this);
+        isBeingPulled = false;
+        pullTarget = null;
     }
 }

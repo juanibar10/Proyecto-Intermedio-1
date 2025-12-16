@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2370553213374110847}
   - component: {fileID: 7646312838767650658}
   - component: {fileID: 1411429913463460230}
+  - component: {fileID: 7314054313548880156}
   m_Layer: 0
   m_Name: PowerUpMagnet
   m_TagString: Untagged
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6310bf201bdac674cb98b41f61c70b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 15
+  data: {fileID: 11400000, guid: 8a7cd5ad77d38d84d9a1ae94fe3c2c42, type: 2}
 --- !u!114 &1411429913463460230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +203,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementType: 0
+  elementType: 1
   active: 1
   invertSpeed: 0
+--- !u!114 &7314054313548880156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441246583862382217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629383397e5eb0c45a3a99c9e6134dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementType: 1
+  leftOffset: 2

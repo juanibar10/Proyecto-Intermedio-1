@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleParent : MonoBehaviour, IOutOfBoundsHandler
+public class ObstacleParent : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<ObstacleData>
 {
     [SerializeField] private ObstacleData data;
     public ObstacleData Data => data;

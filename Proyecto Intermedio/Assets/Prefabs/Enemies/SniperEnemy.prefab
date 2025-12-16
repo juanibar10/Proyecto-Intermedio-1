@@ -131,7 +131,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   maxHealth: 1
+  receiveDamageOnCollide: 0
+  makeDamageOnCollide: 0
 --- !u!114 &4389564205534934587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementType: 1
+  elementType: 1
+  active: 1
+  invertSpeed: 0
 --- !u!114 &8411353484187597398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629383397e5eb0c45a3a99c9e6134dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 3770563149247007161}
+  elementType: 1
   leftOffset: 2
 --- !u!1 &6152352068438436425
 GameObject:

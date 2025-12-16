@@ -1,11 +1,15 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public interface IObstaclePool : IPool<ObstacleParent> { }
-
-public class ObstaclesPool : BasePoolBehaviour<ObstacleParent>, IObstaclePool
+[DisallowMultipleComponent]
+public class ObstaclesPool : DataPoolBehaviour<ObstacleParent, ObstacleData>
 {
-    /// <summary>
-    /// Retrieves the unique ID from the prefab to identify pool entries
-    /// </summary>
-    protected override int GetIdFromPrefab(ObstacleParent prefab) => prefab.Data.id;
+    public IReadOnlyList<ObstacleData> EntriesData
+    {
+        get
+        {
+            return entries.Select(entry => entry.prefab.Data).ToList();
+        }
+    }
 }

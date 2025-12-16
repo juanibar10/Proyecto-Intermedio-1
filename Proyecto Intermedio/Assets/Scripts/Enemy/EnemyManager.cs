@@ -1,28 +1,15 @@
-using System;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+[RequireComponent(typeof(EnemyPool))]
+public class EnemyManager : PoolManager<BaseEnemy>
 {
-    public EnemyPool enemyPool;
-
-    public void SpawnEnemy(Vector3 spawnPoint)
+    protected override void OnEnable()
     {
-        var enemy = enemyPool.Get(0);
-        enemy.transform.position = spawnPoint;
+        GameEvents.OnEnemyReturnToPool += Despawn;
     }
 
-    private void DespawnEnemy(BaseEnemy enemy)
+    protected override void OnDisable()
     {
-        enemyPool.ReturnToPool(enemy);
-    }
-    
-    private void OnEnable()
-    {
-        GameEvents.OnEnemyReturnToPool += DespawnEnemy;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.OnEnemyReturnToPool -= DespawnEnemy;
+        GameEvents.OnEnemyReturnToPool -= Despawn;
     }
 }

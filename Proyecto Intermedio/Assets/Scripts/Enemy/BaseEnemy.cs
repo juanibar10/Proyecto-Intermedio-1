@@ -1,9 +1,11 @@
 using UnityEngine;
 
 [RequireComponent(typeof(OutOfBoundsNotifier))]
-public class BaseEnemy : MonoBehaviour, IOutOfBoundsHandler
+public class BaseEnemy : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<EnemyData>
 {
-    public EnemyData data;
+    [SerializeField] private EnemyData data;
+    public EnemyData Data => data;
+    
     private Damageable dm;
 
     private void Awake()
@@ -31,4 +33,5 @@ public class BaseEnemy : MonoBehaviour, IOutOfBoundsHandler
     {
         ReturnEnemyToPool();
     }
+
 }

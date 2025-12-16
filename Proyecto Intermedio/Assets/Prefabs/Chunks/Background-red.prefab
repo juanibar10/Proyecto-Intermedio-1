@@ -96,6 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementType: 0
   active: 1
+  invertSpeed: 0
 --- !u!114 &-7520869322692631641
 MonoBehaviour:
   m_ObjectHideFlags: 0

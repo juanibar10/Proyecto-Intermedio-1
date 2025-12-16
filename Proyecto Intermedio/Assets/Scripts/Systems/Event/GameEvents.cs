@@ -8,8 +8,12 @@ public static class GameEvents
         OnChunkReturnToPool?.Invoke(chunk);
     
     public static event Action<BaseEnemy> OnEnemyReturnToPool;
-    public static void RaiseEnemyReturnToPool(BaseEnemy Enemy) =>
-        OnEnemyReturnToPool?.Invoke(Enemy);
+    public static void RaiseEnemyReturnToPool(BaseEnemy enemy) =>
+        OnEnemyReturnToPool?.Invoke(enemy);
+    
+    public static event Action<PowerUpBase> OnPowerUpReturnToPool;
+    public static void RaisePowerUpReturnToPool(PowerUpBase powerUp) =>
+        OnPowerUpReturnToPool?.Invoke(powerUp);
     
     
     public static event Action OnPlayerKilled;
@@ -24,5 +28,10 @@ public static class GameEvents
     public static event Action<ObstacleParent> OnObstacleReturnToPool;
     public static void RaiseObstacleReturnToPool(ObstacleParent obstacleParent) => 
         OnObstacleReturnToPool?.Invoke(obstacleParent);
+    
+    
+    public static event Action<CollectibleBase> OnCollectibleReturnToPool;
+    public static void RaiseCollectibleReturnToPool(CollectibleBase collectible) => 
+        OnCollectibleReturnToPool?.Invoke(collectible);
 
 }

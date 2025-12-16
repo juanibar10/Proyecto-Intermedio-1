@@ -1,37 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class ObstacleManager : MonoBehaviour
+public class ObstacleManager : PoolManager<ObstacleParent>
 {
-    [SerializeField] private ObstaclesPool obstaclePool;
-    [SerializeField] private Transform spawnPoint;
+    public IReadOnlyList<ObstacleData> AvailableObstacleData => (pool as ObstaclesPool)?.EntriesData;
 
-    public void SpawnObstacle(Vector3 spawnPos)
+    protected override void OnEnable()
     {
-        var entries = obstaclePool.Entries;
-        var count = entries.Count;
-
-        if (count == 0)
-            return;
-
-        var index = Random.Range(0, count);
-        var id = entries[index].prefab.Data.id;
-
-        var obstacle = obstaclePool.Get(id);
-        obstacle.transform.position = spawnPos;
+        GameEvents.OnObstacleReturnToPool += Despawn;
     }
 
-    private void DespawnObstacle(ObstacleParent obstacle)
+    protected override void OnDisable()
     {
-        obstaclePool.ReturnToPool(obstacle);
-    }
-
-    private void OnEnable()
-    {
-        GameEvents.OnObstacleReturnToPool += DespawnObstacle;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.OnObstacleReturnToPool -= DespawnObstacle;
+        GameEvents.OnObstacleReturnToPool -= Despawn;
     }
 }
