@@ -169,14 +169,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnOffsetX: 2
   groundY: -3
-  lowY: -1
-  midY: 1
-  highY: 3
-  minSpawnDistance: 2.5
-  maxSpawnDistance: 3.5
-  obstacleChance: 0.6
-  forceObstacleSpawn: 1
+  laneHeight: 2
+  minSpawnDistance: 3
+  maxSpawnDistance: 4.5
+  minSpawnDistanceAtMaxSpeed: 5
+  maxSpawnDistanceAtMaxSpeed: 7
+  minSpawnSpeedFactor: 0.65
+  maxSpawnSpeedFactor: 1
+  obstacleChance: 0.55
+  enemyChance: 0.45
+  collectibleChance: 0.65
+  powerUpChance: 0.12
   obstacleManager: {fileID: 640160383}
+  enemyManager: {fileID: 411400439}
+  collectibleManager: {fileID: 979587384}
+  powerUpManager: {fileID: 357489955}
 --- !u!1 &149638691
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +241,6 @@ GameObject:
   m_Component:
   - component: {fileID: 157578723}
   - component: {fileID: 157578722}
-  - component: {fileID: 157578724}
   m_Layer: 0
   m_Name: EnviromentalSpeedManager
   m_TagString: Untagged
@@ -254,13 +260,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cad74d09636600498ddbd12710cab7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSpeed: 5
-  maxSpeed: 30
-  acceleration: 1
-  realAcceleration: 0.2
-  backgroundSpeedMultiplier: 0.5
+  startSpeed: 4
+  maxSpeed: 22
+  acceleration: 0.6
+  realAcceleration: 0.15
+  backgroundSpeedMultiplier: 0.45
   itemSpeedMultiplier: 1
-  projectileSpeedMultiplier: 1.5
+  projectileSpeedMultiplier: 1.4
   stopDuration: 1.2
   stopEase: 18
   resumeDuration: 0.4
@@ -280,21 +286,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &157578724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157578721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d31cef7f7238644841d00bf2277c32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elementType: 0
-  active: 1
-  invertSpeed: 0
 --- !u!1001 &352587284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -560,6 +551,8 @@ MonoBehaviour:
     initialSize: 10
   - prefab: {fileID: 3154030687259658121, guid: e19a3b258c9b9a84394514e82bb7156d, type: 3}
     initialSize: 10
+  - prefab: {fileID: 4403297850790192365, guid: f7b14fba7d7e37a4187d59ebc122592b, type: 3}
+    initialSize: 10
 --- !u!114 &411400439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,11 +666,11 @@ MonoBehaviour:
   entries:
   - prefab: {fileID: 3369306912435389996, guid: 02878fc23587e4c4ba658f3b4e96a4a3, type: 3}
     initialSize: 5
-  - prefab: {fileID: 1471717354733530078, guid: 75cd8f5e11901634dada48ed01113ad0, type: 3}
+  - prefab: {fileID: 8379956439690832795, guid: 75cd8f5e11901634dada48ed01113ad0, type: 3}
     initialSize: 5
-  - prefab: {fileID: 6196541339225476776, guid: 8ab35d5784247c84eac26d7c7d57b644, type: 3}
+  - prefab: {fileID: 4377079160939027846, guid: 8ab35d5784247c84eac26d7c7d57b644, type: 3}
     initialSize: 5
-  - prefab: {fileID: 7793801716027883604, guid: 81c20dabb6ab02e4caba1eef84c146cc, type: 3}
+  - prefab: {fileID: 5162902895888220845, guid: 81c20dabb6ab02e4caba1eef84c146cc, type: 3}
     initialSize: 5
 --- !u!114 &640160383
 MonoBehaviour:
@@ -985,6 +978,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeatWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1217150279713581983, guid: f87968f29db8a7942bed0973dc6b4b54, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4756340248373848433, guid: f87968f29db8a7942bed0973dc6b4b54, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.1
@@ -1048,7 +1045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4735440934718843791, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5902196419339204815, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
       propertyPath: m_LocalPosition.x

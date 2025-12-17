@@ -6,6 +6,9 @@ public class EnemyData : ScriptableObject, IPoolData
     [SerializeField] private int id;
     public int Id => id;
     
+    public bool isFlyer;
+    
+    [Space]
     public GameObject bulletPrefab;
     public float minShootDelay = 0.2f;   
     public float maxShootDelay = 3.5f;

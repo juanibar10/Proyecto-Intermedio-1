@@ -11,9 +11,18 @@ public enum Lane
     High   = 3
 }
 
+public enum LaneContent
+{
+    Empty,
+    Obstacle,
+    Enemy,
+    Collectible,
+    PowerUp
+}
+
 public class LaneState
 {
-    public bool blocked;
+    public LaneContent content = LaneContent.Empty;
 }
 
 public class LaneSpawnDirector : MonoBehaviour
@@ -21,33 +30,39 @@ public class LaneSpawnDirector : MonoBehaviour
     [Header("Spawn X")]
     [SerializeField] private float spawnOffsetX = 2f;
 
-    [Header("Lane Heights")]
+    [Header("Lane Layout")]
     [SerializeField] private float groundY = -3f;
-    [SerializeField] private float lowY    = -1f;
-    [SerializeField] private float midY    = 1f;
-    [SerializeField] private float highY   = 3f;
+    [SerializeField] private float laneHeight = 2f;
 
     [Header("Spawn Distance")]
     [SerializeField] private float minSpawnDistance = 2.5f;
     [SerializeField] private float maxSpawnDistance = 3.5f;
 
-    [Header("Obstacle Settings")]
-    [SerializeField, Range(0f, 1f)] private float obstacleChance = 1f;
-    [SerializeField] private bool forceObstacleSpawn = true;
+    [Header("Spawn Scaling")]
+    [SerializeField] private float minSpawnDistanceAtMaxSpeed = 4.5f;
+    [SerializeField] private float maxSpawnDistanceAtMaxSpeed = 6.5f;
+    [SerializeField] private float minSpawnSpeedFactor = 0.6f;
+    [SerializeField] private float maxSpawnSpeedFactor = 1f;
+
+    [Header("Chances")]
+    [SerializeField, Range(0f, 1f)] private float obstacleChance   = 0.6f;
+    [SerializeField, Range(0f, 1f)] private float enemyChance      = 0.5f;
+    [SerializeField, Range(0f, 1f)] private float collectibleChance = 0.6f;
+    [SerializeField, Range(0f, 1f)] private float powerUpChance     = 0.15f;
 
     [Header("Managers")]
     [SerializeField] private ObstacleManager obstacleManager;
+    [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] private CollectibleManager collectibleManager;
+    [SerializeField] private PowerUpManager powerUpManager;
 
     private readonly Dictionary<Lane, LaneState> _lanes = new();
-    private Camera _cam;
     private Lane[] _laneValues;
+    private Camera _cam;
 
     private float _distanceAccumulator;
     private float _nextSpawnDistance;
 
-    // ---------------------------------------------------------------------
-    // UNITY LIFECYCLE
-    // ---------------------------------------------------------------------
     private void Awake()
     {
         _cam = Camera.main;
@@ -59,123 +74,172 @@ public class LaneSpawnDirector : MonoBehaviour
 
     private void Start()
     {
-        _nextSpawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+        ResetNextSpawnDistance();
     }
 
     private void Update()
     {
-        var speed = EnvironmentSpeedManager.Instance.ItemSpeed;
-        if (speed <= 0f)
-            return;
+        var speedManager = EnvironmentSpeedManager.Instance;
+        var speed = speedManager.ItemSpeed;
+        if (speed <= 0f) return;
 
-        _distanceAccumulator += speed * Time.deltaTime;
+        var t = speedManager.NormalizedSpeed01;
 
-        if (_distanceAccumulator >= _nextSpawnDistance)
-        {
-            _distanceAccumulator = 0f;
-            _nextSpawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-            SpawnTick();
-        }
+        var spawnSpeedFactor = Mathf.Lerp(
+            minSpawnSpeedFactor,
+            maxSpawnSpeedFactor,
+            t
+        );
+
+        _distanceAccumulator += speed * spawnSpeedFactor * Time.deltaTime;
+
+        if (_distanceAccumulator < _nextSpawnDistance) return;
+
+        _distanceAccumulator = 0f;
+        ResetNextSpawnDistance();
+        SpawnTick();
     }
 
-    // ---------------------------------------------------------------------
-    // SPAWN TICK
     // ---------------------------------------------------------------------
     private void SpawnTick()
     {
         ResetLanes();
+
         TrySpawnObstacle();
+        TrySpawnEnemy();
+        TrySpawnCollectibles();
+        TrySpawnPowerUp();
     }
 
     private void ResetLanes()
     {
         foreach (var lane in _laneValues)
-            _lanes[lane].blocked = false;
+            _lanes[lane].content = LaneContent.Empty;
     }
 
-    // ---------------------------------------------------------------------
-    // OBSTACLES
     // ---------------------------------------------------------------------
     private void TrySpawnObstacle()
     {
-        if (obstacleManager == null)
+        if (!obstacleManager || Random.value > obstacleChance)
             return;
 
-        if (!forceObstacleSpawn && Random.value > obstacleChance)
-            return;
-
-        var data = PickObstacleDataFromManager();
-        if (data == null)
-            return;
+        var data = PickRandom(obstacleManager.AvailableObstacleData);
+        if (!data) return;
 
         var height = Mathf.Clamp(data.HeightInLanes, 1, _laneValues.Length);
 
-        // Check if obstacle fits (always starts at Ground)
         for (var i = 0; i < height; i++)
-        {
-            var lane = _laneValues[i];
-            if (_lanes[lane].blocked)
+            if (_lanes[_laneValues[i]].content != LaneContent.Empty)
                 return;
-        }
 
-        // Mark lanes as blocked
         for (var i = 0; i < height; i++)
+            _lanes[_laneValues[i]].content = LaneContent.Obstacle;
+
+        obstacleManager.Spawn(GetSpawnPositionGround(), data.Id);
+    }
+
+    // ---------------------------------------------------------------------
+    private void TrySpawnEnemy()
+    {
+        if (!enemyManager || Random.value > enemyChance)
+            return;
+
+        var data = PickRandom(enemyManager.AvailableEnemyData);
+        if (!data) return;
+
+        var validLanes = GetValidEnemyLanes(data.isFlyer);
+        if (validLanes.Count == 0) return;
+
+        var lane = validLanes[Random.Range(0, validLanes.Count)];
+        enemyManager.Spawn(GetSpawnPositionForLane(lane), data.Id);
+
+        _lanes[lane].content = LaneContent.Enemy;
+    }
+
+    private List<Lane> GetValidEnemyLanes(bool isFlyer)
+    {
+        var result = new List<Lane>();
+
+        foreach (var lane in _laneValues)
         {
-            var lane = _laneValues[i];
-            _lanes[lane].blocked = true;
+            if (_lanes[lane].content != LaneContent.Empty)
+                continue;
+
+            if (!isFlyer && lane == Lane.Ground)
+                result.Add(lane);
+            else if (isFlyer && (lane == Lane.Mid || lane == Lane.High))
+                result.Add(lane);
         }
 
-        // Spawn obstacle
-        obstacleManager.Spawn(GetSpawnPosition(Lane.Ground), data.Id);
+        return result;
     }
 
-    private ObstacleData PickObstacleDataFromManager()
+    // ---------------------------------------------------------------------
+    private void TrySpawnCollectibles()
     {
-        var available = obstacleManager.AvailableObstacleData;
-        if (available == null || available.Count == 0)
-            return null;
+        if (!collectibleManager) return;
 
-        var index = Random.Range(0, available.Count);
-        return available[index];
+        foreach (var lane in _laneValues)
+        {
+            if (_lanes[lane].content != LaneContent.Empty)
+                continue;
+
+            if (Random.value > collectibleChance)
+                continue;
+
+            collectibleManager.Spawn(GetSpawnPositionForLane(lane), 0);
+            _lanes[lane].content = LaneContent.Collectible;
+        }
     }
 
     // ---------------------------------------------------------------------
-    // UTIL
+    private void TrySpawnPowerUp()
+    {
+        if (!powerUpManager || Random.value > powerUpChance)
+            return;
+
+        var freeLanes = GetFreeLanes();
+        if (freeLanes.Count == 0) return;
+
+        var lane = freeLanes[Random.Range(0, freeLanes.Count)];
+        powerUpManager.Spawn(GetSpawnPositionForLane(lane), 0);
+
+        _lanes[lane].content = LaneContent.PowerUp;
+    }
+
     // ---------------------------------------------------------------------
-    private Vector3 GetSpawnPosition(Lane lane)
+    private Vector3 GetSpawnPositionGround()
+        => new Vector3(GetSpawnX(), groundY, 0f);
+
+    private Vector3 GetSpawnPositionForLane(Lane lane)
+        => new Vector3(GetSpawnX(), groundY + (int)lane * laneHeight, 0f);
+
+    private float GetSpawnX()
     {
         var camHalfWidth = _cam.orthographicSize * _cam.aspect;
-        var x = _cam.transform.position.x + camHalfWidth + spawnOffsetX;
-        var pos = new Vector3(x, GetLaneY(lane), 0f);
-
-#if UNITY_EDITOR
-        Debug.DrawLine(pos + Vector3.up * 0.5f, pos + Vector3.down * 0.5f, Color.green, 1f);
-        Debug.DrawLine(pos + Vector3.left * 0.5f, pos + Vector3.right * 0.5f, Color.green, 1f);
-#endif
-
-        return pos;
-    }
-
-    private float GetLaneY(Lane lane)
-    {
-        return lane switch
-        {
-            Lane.Ground => groundY,
-            Lane.Low    => lowY,
-            Lane.Mid    => midY,
-            Lane.High   => highY,
-            _ => 0f
-        };
+        return _cam.transform.position.x + camHalfWidth + spawnOffsetX;
     }
 
     // ---------------------------------------------------------------------
-    // DEBUG
-    // ---------------------------------------------------------------------
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
+    private static T PickRandom<T>(IReadOnlyList<T> list)
+        => list == null || list.Count == 0 ? default : list[Random.Range(0, list.Count)];
 
-        for (var y = -4f; y <= 4f; y += 2f)
-            Gizmos.DrawLine(new Vector3(-20f, y, 0f), new Vector3(20f, y, 0f));
+    private List<Lane> GetFreeLanes()
+    {
+        var result = new List<Lane>();
+        foreach (var lane in _laneValues)
+            if (_lanes[lane].content == LaneContent.Empty)
+                result.Add(lane);
+        return result;
+    }
+
+    private void ResetNextSpawnDistance()
+    {
+        var t = EnvironmentSpeedManager.Instance.NormalizedSpeed01;
+
+        var min = Mathf.Lerp(minSpawnDistance, minSpawnDistanceAtMaxSpeed, t);
+        var max = Mathf.Lerp(maxSpawnDistance, maxSpawnDistanceAtMaxSpeed, t);
+
+        _nextSpawnDistance = Random.Range(min, max);
     }
 }

@@ -43,8 +43,7 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     public float BackgroundSpeed => _currentSpeed * backgroundSpeedMultiplier;
     public float ItemSpeed       => _currentSpeed * itemSpeedMultiplier;
     public float ProjectileSpeed => _currentSpeed * projectileSpeedMultiplier;
-
-    
+    public float NormalizedSpeed01 => Mathf.InverseLerp(startSpeed, maxSpeed, _currentSpeed);
     
     private void OnEnable()
     {

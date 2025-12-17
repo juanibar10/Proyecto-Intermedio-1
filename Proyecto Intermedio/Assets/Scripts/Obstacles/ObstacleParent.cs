@@ -50,4 +50,18 @@ public class ObstacleParent : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<
         _childrenDestroyedCount = 0;
         children.ForEach(child => child.RestoreObstacle());
     }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+
+        var p = transform.position;
+        var size = 0.25f;
+        // Cross
+        Gizmos.DrawLine(p + Vector3.up * size,    p + Vector3.down * size);
+        Gizmos.DrawLine(p + Vector3.left * size,  p + Vector3.right * size);
+
+        // Small sphere at pivot
+        Gizmos.DrawSphere(p, size * 0.15f);
+    }
 }
