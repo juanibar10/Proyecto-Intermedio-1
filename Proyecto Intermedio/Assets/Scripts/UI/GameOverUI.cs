@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class GameOverUI : MonoBehaviour
 {
     [Header("Texts")]
@@ -12,6 +13,20 @@ public class GameOverUI : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private float animationDuration = 1.2f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip tickSound;
+    [SerializeField] private float tickInterval = 0.15f;
+
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.spatialBlend = 0f;
+    }
 
     public void ShowResults(RunStatistics stats)
     {
@@ -30,14 +45,22 @@ public class GameOverUI : MonoBehaviour
     private IEnumerator AnimateInt(TextMeshProUGUI text, int from, int to)
     {
         float elapsed = 0f;
+        float soundTimer = 0f;
 
         while (elapsed < animationDuration)
         {
             elapsed += Time.unscaledDeltaTime;
-            float t = elapsed / animationDuration;
+            soundTimer += Time.unscaledDeltaTime;
 
+            float t = elapsed / animationDuration;
             int value = Mathf.RoundToInt(Mathf.Lerp(from, to, t));
             text.text = value.ToString();
+
+            if (soundTimer >= tickInterval && tickSound != null)
+            {
+                soundTimer = 0f;
+                audioSource.PlayOneShot(tickSound, 0.6f);
+            }
 
             yield return null;
         }
@@ -48,14 +71,22 @@ public class GameOverUI : MonoBehaviour
     private IEnumerator AnimateFloat(TextMeshProUGUI text, float from, float to, string suffix)
     {
         float elapsed = 0f;
+        float soundTimer = 0f;
 
         while (elapsed < animationDuration)
         {
             elapsed += Time.unscaledDeltaTime;
-            float t = elapsed / animationDuration;
+            soundTimer += Time.unscaledDeltaTime;
 
+            float t = elapsed / animationDuration;
             float value = Mathf.Lerp(from, to, t);
             text.text = $"{value:F1}{suffix}";
+
+            if (soundTimer >= tickInterval && tickSound != null)
+            {
+                soundTimer = 0f;
+                audioSource.PlayOneShot(tickSound, 0.6f);
+            }
 
             yield return null;
         }
