@@ -5,7 +5,7 @@ using System.Collections;
 public class MeatWallAdvance : MonoBehaviour
 {
     [SerializeField] private string playerTag = "Player";
-    [Range(0f, 1f)] 
+    [Range(0f, 1f)]
     [SerializeField] private float healthThresholdRatio = 0.5f;
 
     [SerializeField] private Vector3 behindOffset = new Vector3(-1.6f, 0f, 0f);
@@ -15,11 +15,20 @@ public class MeatWallAdvance : MonoBehaviour
     [SerializeField] private bool moveInstantly = false;
     [SerializeField] private bool triggerOnce = true;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip advanceSound;
+
     private Transform playerTransform;
     private Damageable playerDamageable;
     private bool activated = false;
     private Vector3 targetPosition;
     private Coroutine moveCoroutine;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -27,8 +36,8 @@ public class MeatWallAdvance : MonoBehaviour
         if (playerGO == null) return;
 
         playerTransform = playerGO.transform;
-        playerDamageable = playerGO.GetComponent<Damageable>() 
-                           ?? playerGO.GetComponentInParent<Damageable>() 
+        playerDamageable = playerGO.GetComponent<Damageable>()
+                           ?? playerGO.GetComponentInParent<Damageable>()
                            ?? playerGO.GetComponentInChildren<Damageable>();
 
         if (playerDamageable != null)
@@ -68,6 +77,10 @@ public class MeatWallAdvance : MonoBehaviour
         if (ratio <= healthThresholdRatio)
         {
             activated = true;
+
+            if (advanceSound != null && audioSource != null)
+                audioSource.PlayOneShot(advanceSound);
+
             ComputeTargetPosition();
 
             if (moveInstantly)

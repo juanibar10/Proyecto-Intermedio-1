@@ -8,6 +8,10 @@ public class PlayerDamageFeedback : MonoBehaviour
     private Damageable damageable;
     private SpriteRenderer spriteRenderer;
     private CameraShake cameraShake;
+    private AudioSource audioSource;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip damageSound;
 
     private Color originalColor;
     private Color flashColor = new Color(1f, 0.4f, 0.4f);
@@ -21,6 +25,7 @@ public class PlayerDamageFeedback : MonoBehaviour
         damageable = GetComponent<Damageable>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         cameraShake = Camera.main.GetComponent<CameraShake>();
+        audioSource = GetComponent<AudioSource>();
 
         originalColor = spriteRenderer.color;
     }
@@ -37,15 +42,15 @@ public class PlayerDamageFeedback : MonoBehaviour
 
     private void OnDamageTaken()
     {
-        // Activa animación
         animator.SetTrigger("Damage");
 
-        // Flash visual
         StopAllCoroutines();
         StartCoroutine(Flash());
 
-        //Movimiento de cámara
         cameraShake.Shake(0.1f, 0.15f);
+
+        if (damageSound != null && audioSource != null)
+            audioSource.PlayOneShot(damageSound);
     }
 
     private IEnumerator Flash()
