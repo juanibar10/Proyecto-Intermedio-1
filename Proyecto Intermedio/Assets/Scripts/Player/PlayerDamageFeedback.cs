@@ -7,6 +7,7 @@ public class PlayerDamageFeedback : MonoBehaviour
     private Animator animator;
     private Damageable damageable;
     private SpriteRenderer spriteRenderer;
+    private CameraShake cameraShake;
 
     private Color originalColor;
     private Color flashColor = new Color(1f, 0.4f, 0.4f);
@@ -19,6 +20,8 @@ public class PlayerDamageFeedback : MonoBehaviour
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        cameraShake = Camera.main.GetComponent<CameraShake>();
+
         originalColor = spriteRenderer.color;
     }
 
@@ -40,6 +43,9 @@ public class PlayerDamageFeedback : MonoBehaviour
         // Flash visual
         StopAllCoroutines();
         StartCoroutine(Flash());
+
+        //Movimiento de cámara
+        cameraShake.Shake(0.1f, 0.15f);
     }
 
     private IEnumerator Flash()
