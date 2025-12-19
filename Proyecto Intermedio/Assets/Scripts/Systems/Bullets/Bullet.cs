@@ -39,13 +39,13 @@ public class Bullet : MonoBehaviour
         if (damageable == null) return;
 
 
-        if (owner == BulletOwner.Player && collision.CompareTag("Enemy")) //TODO
+        if (owner == BulletOwner.Player && collision.CompareTag("Enemy"))
         {
             damageable.TakeDamage(1, owner);
             Destroy(gameObject);
         }
 
-        if (owner == BulletOwner.Enemy && collision.CompareTag("Player")) //TODO
+        if (owner == BulletOwner.Enemy && collision.CompareTag("Player"))
         {
             damageable.TakeDamage(10, owner);
             Destroy(gameObject);

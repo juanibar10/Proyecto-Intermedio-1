@@ -15,12 +15,23 @@ public class BaseEnemy : MonoBehaviour, IOutOfBoundsHandler, IDataProvider<Enemy
 
     private void OnEnable()
     {
-        dm.OnDied += ReturnEnemyToPool;
+        dm.OnDied += HandleDeath;
     }
 
     private void OnDisable()
     {
-        dm.OnDied -= ReturnEnemyToPool;
+        dm.OnDied -= HandleDeath;
+    }
+
+    private void HandleDeath()
+    {
+        // Contar kill SOLO si lo mató el jugador
+        if (dm.LastDamageOwner == BulletOwner.Player)
+        {
+            StatisticsSystem.Instance.AddKill();
+        }
+
+        ReturnEnemyToPool();
     }
     
     public void ReturnEnemyToPool()

@@ -14,6 +14,7 @@ public class StatisticsSystem : MonoBehaviour
     [SerializeField] private int scoreMultiplier = 1;
 
     private float scoreAccumulator = 0f;
+    private bool runActive = true;
 
     public event Action OnStatsChanged;
     public RunStatistics CurrentRun { get; private set; }
@@ -28,6 +29,13 @@ public class StatisticsSystem : MonoBehaviour
 
         Instance = this;
         ResetStats();
+    }
+
+    private void Update()
+    {
+        if (!runActive) return;
+
+        CurrentRun.timeSurvived += Time.deltaTime;
     }
 
     public void ResetStats()

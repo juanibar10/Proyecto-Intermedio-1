@@ -11,8 +11,11 @@ public class Damageable : MonoBehaviour
     [SerializeField] private int maxHealth = 5;
     private int currentHealth;
 
+    private BulletOwner lastDamageOwner;
+
     public int Health => currentHealth;
     public int MaxHealth => maxHealth;
+    public BulletOwner LastDamageOwner => lastDamageOwner;
 
     public event Action<int, int> OnHealthChanged;
     public event Action OnDied;
@@ -38,6 +41,8 @@ public class Damageable : MonoBehaviour
 
     public void ReceiveDamage(BulletOwner owner, int damageAmount = 1)
     {
+        lastDamageOwner = owner;
+
         //Si el ataque proviene de un enemigo y el player tiene escudo, NO recibe da�o
         if (owner is BulletOwner.Enemy or BulletOwner.Environment)
         {
