@@ -9,6 +9,8 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private CanvasGroup gameOverGroup;
     [SerializeField] private float fadeDuration = 0.25f;
 
+    [SerializeField] private GameOverUI gameOverUI;
+
     private Tween _fadeTween;
     private bool _isPaused;
 
@@ -109,6 +111,9 @@ public class PauseMenuManager : MonoBehaviour
         gameOverGroup.alpha = 0f;
 
         Time.timeScale = 0f;
+
+        var stats = StatisticsSystem.Instance.CurrentRun;
+        gameOverUI.ShowResults(stats);
 
         _fadeTween = gameOverGroup
             .DOFade(1f, fadeDuration)
