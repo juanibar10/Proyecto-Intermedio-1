@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
@@ -6,7 +5,16 @@ public class EnemyShoot : MonoBehaviour
     public EnemyData data;
     public Transform firePoint;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip shootSound;
+
     private float nextShootTimer = 0f;
+    private AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -26,14 +34,20 @@ public class EnemyShoot : MonoBehaviour
 
     void Shoot()
     {
-        //invierte la direccion de la bala detectando el lado
         int dir = transform.position.x > firePoint.position.x ? -1 : 1;
-        BulletHelper.ShootBullet(data.bulletPrefab, firePoint.position, dir, BulletOwner.Enemy);
+        BulletHelper.ShootBullet(
+            data.bulletPrefab,
+            firePoint.position,
+            dir,
+            BulletOwner.Enemy
+        );
+
+        if (shootSound != null && audioSource != null)
+            audioSource.PlayOneShot(shootSound);
     }
 
     void ResetRandomTimer()
     {
         nextShootTimer = Random.Range(data.minShootDelay, data.maxShootDelay);
     }
-
 }

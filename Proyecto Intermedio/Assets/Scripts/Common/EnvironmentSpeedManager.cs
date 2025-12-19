@@ -26,6 +26,11 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     [SerializeField] private float resumeDuration = 0.4f;
     [SerializeField] private Ease resumeEase = Ease.OutBack;
 
+    [Header("Music")]
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private float minMusicPitch = 0.9f;
+    [SerializeField] private float maxMusicPitch = 1.2f;
+    
     private float _currentSpeed;
     private float _savedSpeedBeforeStop;
     private float realSpeed;
@@ -61,6 +66,9 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
     {
         _currentSpeed = startSpeed;
         realSpeed = startSpeed;
+
+        if (musicSource != null && !musicSource.isPlaying)
+            musicSource.Play();
     }
 
     private void Update()
@@ -79,6 +87,8 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
         _currentSpeed += acceleration * Time.deltaTime;
         if (_currentSpeed > maxSpeed)
             _currentSpeed = maxSpeed;
+        
+        UpdateMusic();
     }
 
     // -------------------------------------------------------------------------
@@ -130,5 +140,13 @@ public class EnvironmentSpeedManager : Singleton<EnvironmentSpeedManager>
         )
         .SetEase(resumeEase)
         .SetUpdate(true);
+    }
+    
+    private void UpdateMusic()
+    {
+        if (musicSource == null) return;
+
+        float t = NormalizedSpeed01;
+        musicSource.pitch = Mathf.Lerp(minMusicPitch, maxMusicPitch, t);
     }
 }
