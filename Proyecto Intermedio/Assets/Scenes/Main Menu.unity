@@ -708,9 +708,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'INFINITE RUNNER
-
-'
+  m_text: BROOMBOUND
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 25d84c1398ba53c4b9c6f694c56383aa, type: 2}
   m_sharedMaterial: {fileID: 495996509555803199, guid: 25d84c1398ba53c4b9c6f694c56383aa, type: 2}
