@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 1283678464}
   - component: {fileID: 1283678463}
   - component: {fileID: 1283678466}
+  - component: {fileID: 1283678467}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -905,6 +906,18 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1283678467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283678462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ff5416a3f72a94faca169de7de6769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1459267247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1035,12 +1048,20 @@ PrefabInstance:
       propertyPath: onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 718125977}
+    - target: {fileID: 2188347802100466760, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.469
+      objectReference: {fileID: 0}
     - target: {fileID: 4735440934718843791, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4735440934718843791, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4840095110451029208, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5902196419339204815, guid: 460585ea88ccf9b4594d2e3cd34209cc, type: 3}
