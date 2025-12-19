@@ -13,6 +13,11 @@ public class GameSceneManager : Singleton<GameSceneManager>
     private string activeScene;
     private FadeSystem fadeSystem;
 
+    private Coroutine loadCoroutine;
+    private bool isLoading;
+
+    public bool IsLoading => isLoading;
+
     protected override void Awake()
     {
         base.Awake();
@@ -22,87 +27,76 @@ public class GameSceneManager : Singleton<GameSceneManager>
     private void Start()
     {
         fadeSystem = FadeSystem.Instance;
-
-        if (fadeSystem == null)
-        {
-            Debug.LogError("FadeSystem not found in MainScene. Scene loading flow will fail.");
-            return;
-        }
-
         LoadMainMenu();
     }
 
-    public void LoadMainMenu()
-    {
-        LoadAdditive(mainMenuSceneName);
-    }
+    // ---------------------------------------------------------------------
+    public void LoadMainMenu() => RequestLoad(mainMenuSceneName);
+    public void LoadGameplay() => RequestLoad(gameplaySceneName);
 
-    public void LoadGameplay()
+    private void RequestLoad(string sceneName)
     {
-        LoadAdditive(gameplaySceneName);
-    }
+        if (isLoading)
+            return;
 
-    private void LoadAdditive(string sceneName)
-    {
-        StartCoroutine(LoadRoutine(sceneName));
+        if (loadCoroutine != null)
+            StopCoroutine(loadCoroutine);
+
+        loadCoroutine = StartCoroutine(LoadRoutine(sceneName));
     }
 
     private IEnumerator LoadRoutine(string sceneName)
     {
-        // 1. Fade In
-        if (fadeSystem)
-            yield return fadeSystem.FadeIn().WaitForCompletion();
+        isLoading = true;
+        Time.timeScale = 1;
 
-        // 2. Unload previous scene if exists
+        yield return fadeSystem.FadeIn().WaitForCompletion();
+
+        // Unload
         if (!string.IsNullOrEmpty(activeScene))
         {
-            var unloadOp = SceneManager.UnloadSceneAsync(activeScene);
-            while (unloadOp is { isDone: false })
-                yield return null;
+            if (SceneManager.GetSceneByName(activeScene).isLoaded)
+            {
+                var unload = SceneManager.UnloadSceneAsync(activeScene);
+                while (!unload.isDone)
+                    yield return null;
+            }
         }
 
-        // 3. Load new scene additively
-        var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        if (loadOp != null)
-        {
-            loadOp.allowSceneActivation = false;
-
-            while (loadOp.progress < 0.9f)
-                yield return null;
-
-            loadOp.allowSceneActivation = true;
-
-            while (!loadOp.isDone)
-                yield return null;
-        }
+        // Load
+        var load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        while (!load.isDone)
+            yield return null;
 
         activeScene = sceneName;
 
-        var loadedScene = SceneManager.GetSceneByName(sceneName);
-        while (!loadedScene.isLoaded)
-            yield return null;
+        var scene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(scene);
 
-        SceneManager.SetActiveScene(loadedScene);
+        yield return fadeSystem.FadeOut().WaitForCompletion();
 
-        // 4. Fade Out
-        if (fadeSystem)
-            yield return fadeSystem.FadeOut().WaitForCompletion();
+        isLoading = false;
+        loadCoroutine = null;
     }
 
     public void ExitGame()
     {
+        if (isLoading)
+            return;
+
         StartCoroutine(ExitRoutine());
     }
 
     private IEnumerator ExitRoutine()
     {
-        if (fadeSystem)
-            yield return fadeSystem.FadeIn().WaitForCompletion();
+        isLoading = true;
 
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+        yield return fadeSystem.FadeIn().WaitForCompletion();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

@@ -3,59 +3,49 @@ using DG.Tweening;
 
 public class FadeSystem : Singleton<FadeSystem>
 {
-    [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private float defaultFadeDuration = 0.35f;
-    [SerializeField] private float defaultDelay = 0.5f;
+    [SerializeField] private CanvasGroup fadeGroup;
+    [SerializeField] private float fadeDuration = 0.35f;
 
-    private Tween activeTween;
+    private Tween _currentTween;
 
-    protected override void Awake()
+    public Tween FadeIn()
     {
-        base.Awake();
-        canvasGroup.alpha = 1f;
+        _currentTween?.Kill();
+
+        if (fadeGroup.alpha >= 0.999f)
+        {
+            // Ya está en fade in → tween dummy inmediato
+            return DOVirtual.DelayedCall(0f, () => { })
+                .SetUpdate(true);
+        }
+
+        fadeGroup.blocksRaycasts = true;
+        fadeGroup.alpha = Mathf.Clamp01(fadeGroup.alpha);
+
+        _currentTween = fadeGroup
+            .DOFade(1f, fadeDuration)
+            .SetUpdate(true);
+
+        return _currentTween;
     }
 
-    public Sequence FadeIn(float duration = -1f, float delay = -1f)
+    public Tween FadeOut()
     {
-        if (Mathf.Approximately(canvasGroup.alpha, 1f))
-            return DOTween.Sequence();
+        _currentTween?.Kill();
 
-        if (activeTween != null && activeTween.IsActive())
-            activeTween.Kill();
+        if (fadeGroup.alpha <= 0.001f)
+        {
+            fadeGroup.blocksRaycasts = false;
 
-        if (duration < 0f) duration = defaultFadeDuration;
-        if (delay < 0f) delay = defaultDelay;
+            return DOVirtual.DelayedCall(0f, () => { })
+                .SetUpdate(true);
+        }
 
-        var seq = DOTween.Sequence();
+        _currentTween = fadeGroup
+            .DOFade(0f, fadeDuration)
+            .SetUpdate(true)
+            .OnComplete(() => fadeGroup.blocksRaycasts = false);
 
-        seq.Append(canvasGroup.DOFade(1f, duration).SetUpdate(true));
-
-        if (delay > 0f)
-            seq.AppendInterval(delay);
-
-        activeTween = seq;
-        return seq;
-    }
-
-    public Sequence FadeOut(float duration = -1f, float delay = -1f)
-    {
-        if (Mathf.Approximately(canvasGroup.alpha, 0f))
-            return DOTween.Sequence();
-
-        if (activeTween != null && activeTween.IsActive())
-            activeTween.Kill();
-
-        if (duration < 0f) duration = defaultFadeDuration;
-        if (delay < 0f) delay = defaultDelay;
-
-        var seq = DOTween.Sequence();
-
-        if (delay > 0f)
-            seq.AppendInterval(delay);
-
-        seq.Append(canvasGroup.DOFade(0f, duration).SetUpdate(true));
-
-        activeTween = seq;
-        return seq;
+        return _currentTween;
     }
 }

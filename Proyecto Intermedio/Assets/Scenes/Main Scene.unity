@@ -310,9 +310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643f907f8869fb44d9d5a80321866b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 1069879814}
-  defaultFadeDuration: 0.5
-  defaultDelay: 0.75
+  fadeGroup: {fileID: 1069879814}
+  fadeDuration: 0.35
 --- !u!225 &1069879814
 CanvasGroup:
   m_ObjectHideFlags: 0
